@@ -4,6 +4,14 @@ const { retrieveAllUserLinks } = require("./Link");
 const async = require("async");
 
 module.exports = {
+    createAccount(email, pwd, surname, first_name, age) {
+        return connection.promise().execute(
+            "INSERT INTO user (EMAIL, PASSWORD, SURNAME, FIRST_NAME, AGE) VALUES (?, ?, ?, ?, ?)",
+            [email, pwd, surname, first_name, age])
+            .then(([rows]) => {
+                return rows;
+            });
+    },
     login(email, pwd) {
         return connection.promise().execute(
             "SELECT ID, EMAIL, PASSWORD, URL_PROFILE, SURNAME, FIRST_NAME, AGE, CUSTOM_STATUS, IS_PUBLIC, DATE_CREATED, DATE_EDITED FROM `user` WHERE EMAIL = ? AND PASSWORD = ?",
