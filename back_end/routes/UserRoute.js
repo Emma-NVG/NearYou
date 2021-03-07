@@ -34,8 +34,13 @@ const retrieveAllUserNearRoute = (app) => {
     app.get("/api/:version/user/:id/near", authenticateModule, (req, res) => {
         retrieveAllUserNear(req.params.id).then((data) => {
             if (!!data) {
-                const responseData = new ResponseData("Successful recovery of users close to you !", ResponseCode.S_Success, data);
-                res.status(200).json(responseData)
+                Promise.all(data).then((users) => {
+                    const responseData = new ResponseData("Successful recovery of users close to you !", ResponseCode.S_Success, users);
+                    res.status(200).json(responseData)
+                }).catch((error) => {
+                    const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
+                    res.status(500).json(responseData)
+                })
             } else {
                 const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
                 res.status(500).json(responseData)

@@ -34,19 +34,20 @@ module.exports = {
             "      ORDER BY l3.DATE DESC\n" +
             "      LIMIT 1);",
             [id_user])
-            .then(([rows]) => {
-                const resultSQL = rows[0];
-                if (resultSQL != null) {
-                    return async.parallel([
-                        function (callback) {
-                            retrieveUserData(resultSQL['ID_USER']).then((data) => {
-                                callback(null, data);
-                            })
-                        },
-                    ]).then((data) => {
-                        const user = data[0];
-                        user.distance = resultSQL['DISTANCE'];
-                        return user;
+            .then(async ([rows]) => {
+                if (rows != null) {
+                    return await rows.map(async function (resultSQL) {
+                        return await async.parallel([
+                            function (callback) {
+                                retrieveUserData(resultSQL['ID_USER']).then((data) => {
+                                    callback(null, data);
+                                })
+                            },
+                        ]).then((data) => {
+                            const user = data[0];
+                            user.distance = resultSQL['DISTANCE'];
+                            return user;
+                        });
                     });
                 } else {
                     return null;
