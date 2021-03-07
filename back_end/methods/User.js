@@ -34,6 +34,14 @@ module.exports = {
                 }
             });
     },
+    addLocation(ID, latitude, longitude) {
+        return connection.promise().execute(
+            "INSERT INTO location (ID_USER, COORDINATE) VALUES (?, Point(?, ?))",
+            [ID, latitude, longitude])
+            .then(([rows]) => {
+                return rows;
+            });
+    },
     retrieveUserData(ID_user) {
         return connection.promise().execute(
             "SELECT ID, EMAIL, PASSWORD, URL_PROFILE, SURNAME, FIRST_NAME, AGE, CUSTOM_STATUS, IS_PUBLIC, DATE_CREATED, DATE_EDITED FROM `user` WHERE ID = ?",

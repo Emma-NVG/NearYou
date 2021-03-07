@@ -1,7 +1,7 @@
 const ResponseData = require("../models/Response/ResponseData");
 const ResponseCode = require("../models/Response/ResponseCode");
 const DataObject = require("../models/DataObject");
-const { login, createAccount } = require("../methods/User");
+const { login, createAccount, addLocation } = require("../methods/User");
 const jwt = require("jsonwebtoken");
 const { retrieveUserData } = require("../methods/User");
 const { authenticateModule } = require("../security/middleware");
@@ -10,6 +10,7 @@ const { retrieveAllUserNear } = require("../methods/Location");
 module.exports.includeAllUserRoutes = (app) => {
     createAccountRoute(app);
     loginRoute(app);
+    addLocationToUser(app);
     generateAccessTokenRoute(app);
 
     retrieveUserDataRoute(app);
@@ -19,7 +20,7 @@ module.exports.includeAllUserRoutes = (app) => {
 const createAccountRoute = (app) => {
     app.post("/api/:version/user", (req, res) => {
         createAccount(req.body.email, req.body.password, req.body.surname, req.body.first_name, req.body.age)
-            .then((data) => {
+            .then(() => {
                 const responseData = new ResponseData("Account created with success !", ResponseCode.S_Success, { });
                 res.status(200).json(responseData)
             }).catch(() => {
@@ -42,6 +43,19 @@ const loginRoute = (app) => {
                     res.status(500).json(responseData)
                 }
             }).catch(() => {
+            const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
+            res.status(500).json(responseData)
+        })
+    });
+}
+const addLocationToUser = (app) => {
+    app.post("/api/:version/user/:id/location", authenticateModule, (req, res) => {
+        addLocation(req.params.id, req.body.latitude, req.body.longitude)
+            .then(() => {
+                const responseData = new ResponseData("Location added with success !", ResponseCode.S_Success, { });
+                res.status(200).json(responseData)
+            })
+            .catch(() => {
                 const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
                 res.status(500).json(responseData)
             })
