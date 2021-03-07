@@ -1,6 +1,6 @@
-const ResponseData = require("../models/ResponseData");
+const ResponseData = require("../models/Response/ResponseData");
+const ResponseCode = require("../models/Response/ResponseCode");
 const DataObject = require("../models/DataObject");
-const ResponseCode = require("../models/ResponseCode");
 
 module.exports.includeDefaultRoute = (app) => {
     app.use((req, res) => {

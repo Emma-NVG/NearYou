@@ -1,6 +1,6 @@
 const DataObject = require("../DataObject");
 
-module.exports = class Location extends DataObject{
+module.exports = class Link extends DataObject{
 
     /** @type {number} **/ ID
     /** @type {String} **/ link

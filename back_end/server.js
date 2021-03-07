@@ -1,6 +1,8 @@
+require('dotenv').config({path: __dirname + '/security/environment.env'});
 let express         = require('express'),
     bodyParser      = require('body-parser'), //pour récupérer les résultats des post
     http            = require('http');
+const { includeAllUserRoutes } = require("./routes/UserRoute");
 const { includeDefaultRoute } = require("./routes/DefaultRoute");
 
 
@@ -22,6 +24,7 @@ app.use(bodyParser.urlencoded())
 
 
 /* ======= Routes ======= */
+includeAllUserRoutes(app);
 includeDefaultRoute(app);
 
 
