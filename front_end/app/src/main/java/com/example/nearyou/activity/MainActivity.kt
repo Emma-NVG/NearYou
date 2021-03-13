@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -69,6 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     // This method allows to go to the fragment corresponding to the ID of the clicked menu item
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
     // This method allows to go to the fragment corresponding to the ID of the clicked navigation item
