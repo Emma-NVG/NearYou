@@ -30,7 +30,7 @@ const createAccountRoute = (app) => {
     });
 }
 const loginRoute = (app) => {
-    app.get("/api/:version/user/login", (req, res) => {
+    app.post("/api/:version/user/login", (req, res) => {
         login(req.body.email, req.body.password)
             .then((data) => {
                 if (!!data) {
