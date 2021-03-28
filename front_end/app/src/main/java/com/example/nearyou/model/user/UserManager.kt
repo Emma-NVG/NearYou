@@ -1,5 +1,6 @@
 package com.example.nearyou.model.user
 
+import android.util.Log
 import com.example.nearyou.model.Credential
 import com.example.nearyou.model.response.ResponseBody
 import io.ktor.client.*
@@ -25,11 +26,13 @@ class UserManager {
                 )
             }
 
+            Log.e("Ok", data)
             Json.decodeFromString(data)
         } catch (e: ResponseException) {
             val data = e.response.content.readUTF8Line(10000).toString().replace("{}", "null");
             Json.decodeFromString(data)
         } catch (e: Exception) {
+            Log.e("Erreur", e.localizedMessage)
             return Json.decodeFromString("{\"message\":\"Unknwon error !\",\"code\":\"E-UnknownError\",\"data\":null}")
         }
     }
