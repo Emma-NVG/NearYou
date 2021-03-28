@@ -14,7 +14,7 @@ module.exports = {
     },
     login(email, pwd) {
         return connection.promise().execute(
-            "SELECT ID, EMAIL, PASSWORD, URL_PROFILE, SURNAME, FIRST_NAME, AGE, CUSTOM_STATUS, IS_PUBLIC, DATE_CREATED, DATE_EDITED FROM `user` WHERE EMAIL = ? AND PASSWORD = ?",
+            "SELECT ID, URL_PROFILE, SURNAME, FIRST_NAME, AGE, CUSTOM_STATUS, IS_PUBLIC, DATE_CREATED, DATE_EDITED FROM `user` WHERE EMAIL = ? AND PASSWORD = ?",
             [email, pwd])
             .then(([rows]) => {
                 const resultSQL = rows[0];
@@ -27,7 +27,7 @@ module.exports = {
                         }
                     ]).then((data) => {
                         const userLinks = data[0];
-                        return new User(resultSQL['ID'], resultSQL['EMAIL'], resultSQL['PASSWORD'], resultSQL['URL_PROFILE'], resultSQL['SURNAME'], resultSQL['FIRST_NAME'], resultSQL['AGE'], resultSQL['CUSTOM_STATUS'], resultSQL['IS_PUBLIC'], userLinks, resultSQL['DATE_CREATED'], resultSQL['DATE_EDITED']);
+                        return new User(resultSQL['ID'], resultSQL['URL_PROFILE'], resultSQL['SURNAME'], resultSQL['FIRST_NAME'], resultSQL['AGE'], resultSQL['CUSTOM_STATUS'], resultSQL['IS_PUBLIC'], userLinks, 0, resultSQL['DATE_CREATED'], resultSQL['DATE_EDITED']);
                     });
                 } else {
                     return null;
@@ -44,7 +44,7 @@ module.exports = {
     },
     retrieveUserData(ID_user) {
         return connection.promise().execute(
-            "SELECT ID, EMAIL, PASSWORD, URL_PROFILE, SURNAME, FIRST_NAME, AGE, CUSTOM_STATUS, IS_PUBLIC, DATE_CREATED, DATE_EDITED FROM `user` WHERE ID = ?",
+            "SELECT ID, URL_PROFILE, SURNAME, FIRST_NAME, AGE, CUSTOM_STATUS, IS_PUBLIC, DATE_CREATED, DATE_EDITED FROM `user` WHERE ID = ?",
             [ID_user])
             .then(([rows]) => {
                 const resultSQL = rows[0];
@@ -57,7 +57,7 @@ module.exports = {
                         }
                     ]).then((data) => {
                         const userLinks = data[0];
-                        return new User(resultSQL['ID'], resultSQL['EMAIL'], resultSQL['PASSWORD'], resultSQL['URL_PROFILE'], resultSQL['SURNAME'], resultSQL['FIRST_NAME'], resultSQL['AGE'], resultSQL['CUSTOM_STATUS'], resultSQL['IS_PUBLIC'], userLinks, resultSQL['DATE_CREATED'], resultSQL['DATE_EDITED']);
+                        return new User(resultSQL['ID'], resultSQL['URL_PROFILE'], resultSQL['SURNAME'], resultSQL['FIRST_NAME'], resultSQL['AGE'], resultSQL['CUSTOM_STATUS'], resultSQL['IS_PUBLIC'], userLinks, resultSQL['DATE_CREATED'], resultSQL['DATE_EDITED']);
                     });
                 } else {
                     return null;

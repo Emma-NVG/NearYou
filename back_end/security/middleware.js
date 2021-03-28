@@ -13,7 +13,7 @@ module.exports = {
             return res.status(400).json(responseData);
         } else {
             const token = authorizationHeader.split(" ")[1];
-            jwt.verify(token, process.env.SECURITY_KEY, (error, decodedToken) => {
+            jwt.verify(token, process.env.NEARYOU_SECURITY_KEY, (error, decodedToken) => {
                 if (error) {
                     const responseData = new ResponseData("You are not authorized to make this request !", ResponseCode.E_Unauthorized, new DataObject());
                     return res.status(401).json(responseData);

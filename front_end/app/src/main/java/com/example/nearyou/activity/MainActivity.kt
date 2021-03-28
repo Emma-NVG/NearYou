@@ -6,10 +6,6 @@ import android.view.MenuItem
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.ui.*
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.nearyou.R
