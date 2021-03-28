@@ -1,19 +1,20 @@
 package com.example.nearyou.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.*
 import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityMainBinding
+import com.google.android.material.navigation.NavigationView
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,16 +29,19 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "On peut ouvrir l'activité pour scanner le code :)", Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show()
-        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_home, R.id.nav_profile),
+            setOf(
+                R.id.nav_home,
+                R.id.nav_scan_qr,
+                R.id.nav_profile,
+                R.id.nav_profile_edit,
+                R.id.nav_profile_access,
+                R.id.nav_settings
+            ),
             drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -49,12 +53,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
+
+    // This method allows to go to the fragment corresponding to the ID of the clicked menu item
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+    }
+    // This method allows to go to the fragment corresponding to the ID of the clicked navigation item
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()

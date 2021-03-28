@@ -1,16 +1,15 @@
-package com.example.nearyou.activity.fragment.slideshow
+package com.example.nearyou.activity.fragment.scanqr
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.nearyou.databinding.FragmentProfileBinding
+import com.example.nearyou.databinding.FragmentScanQrBinding
 
-class ProfileFragment : Fragment() {
+class ScanQRCodeFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding? = null
+    private var _binding: FragmentScanQrBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -20,12 +19,9 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentScanQrBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textProfile
-        textView.text = "HIHIHIHIHIHIHIHI"
 
         return root
     }

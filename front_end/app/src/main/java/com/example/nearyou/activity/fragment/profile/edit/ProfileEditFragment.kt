@@ -1,15 +1,15 @@
-package com.example.nearyou.activity.fragment.home
+package com.example.nearyou.activity.fragment.profile.edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.nearyou.databinding.FragmentHomeBinding
+import com.example.nearyou.databinding.FragmentProfileEditBinding
 
-class HomeFragment : Fragment() {
+class ProfileEditFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentProfileEditBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentProfileEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
