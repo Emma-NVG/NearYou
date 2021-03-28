@@ -35,8 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/input_mail"
-            android:text="@string/input_mail"
-            android:textStyle="bold" />
+            android:text="@string/input_mail" />
 
         <EditText
             android:id="@+id/input_mail"
@@ -54,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/password_forgotten"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,8 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/input_password"
-            android:text="@string/input_password"
-            android:textStyle="bold" />
+            android:text="@string/input_password" />
 
         <EditText
             android:id="@+id/input_password"
@@ -79,27 +77,11 @@
             android:inputType="textPassword" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/password_forgotten"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/password_forgotten"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_password" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_connection"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
         android:text="@string/btn_connection"
         android:textColor="#FFFFFF"
         app:backgroundTint="@color/btn_blue"
