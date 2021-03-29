@@ -2,7 +2,9 @@ package com.example.nearyou.model.user
 
 import com.example.nearyou.model.credential.LoginCredential
 import com.example.nearyou.model.credential.SignCredential
+import com.example.nearyou.model.location.Location
 import com.example.nearyou.model.response.ResponseBody
+import com.example.nearyou.model.user.member.Member
 
 object UserDAO {
     private val manager: UserManager = UserManager()
@@ -10,6 +12,12 @@ object UserDAO {
 
     private fun saveUser(user: User?) {
         UserDAO.user = user
+    }
+
+    fun logout() {
+        // TODO : stop location service before
+
+        user = null
     }
 
     suspend fun login(loginCredential: LoginCredential): ResponseBody<User?> {
@@ -27,4 +35,7 @@ object UserDAO {
 
         return response
     }
+
+    suspend fun addLocation(location: Location): ResponseBody<Location?> = Location.manager.addLocation(location)
+    suspend fun retrieveAllUserNearMe(): ResponseBody<Array<Member>> = this.manager.retrieveAllUserNearMe()
 }
