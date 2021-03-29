@@ -15,8 +15,4 @@ data class User(val ID: Int,
                 val distance: Int,
                 val created_date: String,
                 val edited_date: String,
-                val token: String) {
-    companion object {
-        val manager: UserManager = UserManager()
-    }
-}
+                val token: String)
