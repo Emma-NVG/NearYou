@@ -80,7 +80,10 @@ const createAccountRoute = (app) => {
 }
 const loginRoute = (app) => {
     app.post("/api/:version/user/login", (req, res) => {
-        login(req.body.email, req.body.password)
+        const email = req.body.email || "";
+        const password = req.body.password || "";
+
+        login(email, hashData(password))
             .then((data) => {
                 if (!!data) {
                     data["token"] = jwt.sign({ID: data.ID}, process.env.NEARYOU_SECURITY_KEY);
@@ -89,7 +92,7 @@ const loginRoute = (app) => {
                     res.status(200).json(responseData)
                 } else {
                     const responseData = new ResponseData("Login failed !", ResponseCode.E_UnknownError, new DataObject());
-                    res.status(500).json(responseData)
+                    res.status(403).json(responseData)
                 }
             })
             .catch(() => {
