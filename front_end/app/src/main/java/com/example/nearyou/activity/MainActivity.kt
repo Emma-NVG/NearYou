@@ -1,19 +1,17 @@
 package com.example.nearyou.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.ui.*
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityMainBinding
+import com.example.nearyou.model.user.UserDAO
 import com.google.android.material.navigation.NavigationView
 
 
@@ -35,15 +33,15 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home,
-                R.id.nav_scan_qr,
-                R.id.nav_profile,
-                R.id.nav_profile_edit,
-                R.id.nav_profile_access,
-                R.id.nav_settings
-            ),
-            drawerLayout
+                setOf(
+                        R.id.nav_home,
+                        R.id.nav_scan_qr,
+                        R.id.nav_profile,
+                        R.id.nav_profile_edit,
+                        R.id.nav_profile_access,
+                        R.id.nav_settings
+                ),
+                drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -56,6 +54,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        if(UserDAO.user == null){
+            val loadingActivity = Intent(this@MainActivity, LoadingActivity::class.java)
+            startActivity(loadingActivity)
+        }
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
