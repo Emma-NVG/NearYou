@@ -18,12 +18,12 @@ module.exports = {
     },
     retrieveAllUserNear(id_user) {
         return connection.promise().execute(
-            "SELECT l2.ID_USER, ST_Distance_Sphere(L1.COORDINATE, L2.COORDINATE) as DISTANCE\n" +
-            " FROM location l1\n" +
-            "    JOIN location l2 on l2.ID_USER != l1.ID_USER\n" +
+            "SELECT l2.ID_USER, ST_Distance_Sphere(l1.COORDINATE, l2.COORDINATE) as DISTANCE\n" +
+            " FROM last_location_user l1\n" +
+            "    JOIN last_location_user l2 on l2.ID_USER != l1.ID_USER\n" +
             "    JOIN user u on l2.ID_USER = u.ID\n" +
             " WHERE l1.ID_USER = ?\n" +
-            "  AND ST_Distance_Sphere(L1.COORDINATE, L2.COORDINATE) < 5000\n" +
+            "  AND ST_Distance_Sphere(l1.COORDINATE, l2.COORDINATE) < 5000\n" +
             "  AND u.IS_PUBLIC = true\n" +
             "  AND l2.DATE = (\n" +
             "      SELECT l3.DATE\n" +

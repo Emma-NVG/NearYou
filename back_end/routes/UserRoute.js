@@ -3,6 +3,8 @@ const ResponseCode = require("../models/Response/ResponseCode");
 const DataObject = require("../models/DataObject");
 const { login, createAccount, addLocation } = require("../methods/User");
 const jwt = require("jsonwebtoken");
+const { hashData } = require("../security/methods");
+const { validateEmail } = require("../utils/pattern");
 const { retrieveUserData } = require("../methods/User");
 const { authenticateModule } = require("../security/middleware");
 const { retrieveAllUserNear } = require("../methods/Location");
@@ -19,20 +21,69 @@ module.exports.includeAllUserRoutes = (app) => {
 
 const createAccountRoute = (app) => {
     app.post("/api/:version/user", (req, res) => {
-        createAccount(req.body.email, req.body.password, req.body.surname, req.body.first_name, req.body.age)
-            .then(() => {
-                const responseData = new ResponseData("Account created with success !", ResponseCode.S_Success, { });
-                res.status(200).json(responseData)
-            })
-            .catch(() => {
-                const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
-                res.status(500).json(responseData)
-            })
+        const email = req.body.email || "";
+        const pwd = req.body.password || "";
+        const surname = req.body.surname || "";
+        const firstName = req.body.first_name || "";
+        const age = req.body.age || 0;
+
+        if (email.length <= 100 && (pwd.length >= 6 && pwd.length <= 300) && surname.length <= 100 && firstName.length <= 100 && age >= 15) {
+            if (validateEmail(email)) {
+                createAccount(email, hashData(pwd), surname, firstName, age)
+                    .then((data) => {
+                        data["token"] = jwt.sign({ID: data.ID}, process.env.NEARYOU_SECURITY_KEY);
+
+                        const responseData = new ResponseData("Account created with success !", ResponseCode.S_Success, data);
+                        res.status(200).json(responseData)
+                    })
+                    .catch((error) => {
+                        if (error.code != null && error.code === "ER_DUP_ENTRY") {
+                            const responseData = new ResponseData("Email already used by an account !", ResponseCode.E_EmailKnown, new DataObject());
+                            res.status(403).json(responseData)
+                        } else if (error.code != null && error.code === "ER_DATA_TOO_LONG") {
+                            const responseData = new ResponseData("A data is too long !", ResponseCode.E_DatabaseDataTooLong, new DataObject());
+                            res.status(403).json(responseData)
+                        } else {
+                            const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
+                            res.status(500).json(responseData)
+                        }
+                    })
+            } else {
+                const responseData = new ResponseData("Wrong email format !", ResponseCode.E_BadEmailFormat, new DataObject());
+                res.status(403).json(responseData)
+            }
+        } else {
+            if (age < 15) {
+                const responseData = new ResponseData("Too young !", ResponseCode.E_AgeTooYoung, new DataObject());
+                res.status(403).json(responseData)
+            } else if (email.length > 100) {
+                const responseData = new ResponseData("Email is too long !", ResponseCode.E_EmailTooLong, new DataObject());
+                res.status(403).json(responseData)
+            } else if (pwd.length < 6) {
+                const responseData = new ResponseData("Password is too short !", ResponseCode.E_PasswordTooShort, new DataObject());
+                res.status(403).json(responseData)
+            } else if (pwd.length > 300) {
+                const responseData = new ResponseData("Password is too long !", ResponseCode.E_PasswordTooLong, new DataObject());
+                res.status(403).json(responseData)
+            } else if (surname.length > 100) {
+                const responseData = new ResponseData("Surname is too long !", ResponseCode.E_SurnameTooLong, new DataObject());
+                res.status(403).json(responseData)
+            } else if (firstName.length > 100) {
+                const responseData = new ResponseData("First name is too long !", ResponseCode.E_FirstNameTooLong, new DataObject());
+                res.status(403).json(responseData)
+            } else {
+                const responseData = new ResponseData("A data is too long !", ResponseCode.E_DatabaseDataTooLong, new DataObject());
+                res.status(403).json(responseData)
+            }
+        }
     });
 }
 const loginRoute = (app) => {
     app.post("/api/:version/user/login", (req, res) => {
-        login(req.body.email, req.body.password)
+        const email = req.body.email || "";
+        const password = req.body.password || "";
+
+        login(email, hashData(password))
             .then((data) => {
                 if (!!data) {
                     data["token"] = jwt.sign({ID: data.ID}, process.env.NEARYOU_SECURITY_KEY);
@@ -41,7 +92,7 @@ const loginRoute = (app) => {
                     res.status(200).json(responseData)
                 } else {
                     const responseData = new ResponseData("Login failed !", ResponseCode.E_UnknownError, new DataObject());
-                    res.status(500).json(responseData)
+                    res.status(403).json(responseData)
                 }
             })
             .catch(() => {
