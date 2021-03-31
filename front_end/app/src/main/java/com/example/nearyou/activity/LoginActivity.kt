@@ -25,7 +25,8 @@ class LoginActivity : AppCompatActivity() {
 
         val input_mail: EditText = binding.inputMail
         val input_password: EditText = binding.inputPassword
-        val btn: Button = binding.button
+        val btnC: Button = binding.buttonConnection
+        val btnI: Button = binding.buttonInscription
 
         input_mail.addTextChangedListener {
             if (it.toString().isEmpty()){
@@ -37,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        btn.setOnClickListener {
+        btnC.setOnClickListener {
             val credentials = Credential(input_mail.text.toString(),input_password.text.toString())
             CoroutineScope(Dispatchers.IO).launch{
                 if(UserDAO.login(credentials).code == ResponseCode.S_SUCCESS){
@@ -45,6 +46,11 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(mainActivity)
                 }
             }
+        }
+
+        btnI.setOnClickListener {
+            val inscriptionActivity = Intent(this@LoginActivity, InscriptionActivity::class.java)
+            startActivity(inscriptionActivity)
         }
 
     }
