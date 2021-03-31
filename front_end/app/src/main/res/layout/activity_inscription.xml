@@ -9,8 +9,8 @@
 
   <ImageView
       android:id="@+id/logo"
-      android:layout_width="323dp"
-      android:layout_height="225dp"
+      android:layout_width="303dp"
+      android:layout_height="174dp"
       android:contentDescription="@string/logo_img"
       app:layout_constraintBottom_toTopOf="@+id/container_name"
       app:layout_constraintEnd_toEndOf="parent"
@@ -34,14 +34,17 @@
         android:id="@+id/label_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:labelFor="@id/input_name"
         android:text="@string/input_name" />
 
-    <TextView
+    <EditText
         android:id="@+id/input_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_rounded"
-        android:ems="13" />
+        android:ems="10"
+        android:inputType="text"
+        android:autofillHints="" />
   </LinearLayout>
 
   <LinearLayout
@@ -65,14 +68,17 @@
           android:id="@+id/label_fname"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:labelFor="@id/input_fname"
           android:text="@string/input_fname" />
 
-      <TextView
+      <EditText
           android:id="@+id/input_fname"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@drawable/edittext_rounded"
-          android:ems="9" />
+          android:ems="7"
+          android:inputType="text"
+          android:autofillHints="" />
 
     </LinearLayout>
 
@@ -86,6 +92,7 @@
           android:id="@+id/label_age"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:labelFor="@id/input_age"
           android:text="@string/input_age" />
 
       <EditText
@@ -94,7 +101,8 @@
           android:layout_height="wrap_content"
           android:background="@drawable/edittext_rounded"
           android:ems="3"
-          android:inputType="numberSigned" />
+          android:inputType="number"
+          android:autofillHints="" />
 
     </LinearLayout>
 
@@ -199,6 +207,15 @@
       app:layout_constraintTop_toBottomOf="@+id/container_password_c">
 
     <Button
+        android:id="@+id/buttonConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_connection"
+        android:text="@string/btn_connection"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="@color/btn_blue" />
+
+    <Button
         android:id="@+id/buttonInscription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -207,14 +224,6 @@
         android:textColor="#FFFFFF"
         app:backgroundTint="@color/btn_orange" />
 
-    <Button
-        android:id="@+id/buttonConnection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_connection"
-        android:text="@string/btn_connection"
-        android:textColor="#FFFFFF"
-        app:backgroundTint="@color/btn_blue" />
   </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
