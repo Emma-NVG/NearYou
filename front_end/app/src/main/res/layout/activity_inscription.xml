@@ -12,12 +12,93 @@
       android:layout_width="323dp"
       android:layout_height="225dp"
       android:contentDescription="@string/logo_img"
-      app:layout_constraintBottom_toTopOf="@+id/container_mail"
+      app:layout_constraintBottom_toTopOf="@+id/container_name"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@mipmap/ic_logo_foreground" />
+
+  <LinearLayout
+      android:id="@+id/container_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toTopOf="@+id/container_super"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/logo">
+
+    <TextView
+        android:id="@+id/label_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/input_name" />
+
+    <TextView
+        android:id="@+id/input_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_rounded"
+        android:ems="13" />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/container_super"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintBottom_toTopOf="@+id/container_mail"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/container_name">
+
+    <LinearLayout
+        android:id="@+id/container_fname"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/label_fname"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/input_fname" />
+
+      <TextView
+          android:id="@+id/input_fname"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/edittext_rounded"
+          android:ems="9" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_age"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/label_age"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/input_age" />
+
+      <EditText
+          android:id="@+id/input_age"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/edittext_rounded"
+          android:ems="3"
+          android:inputType="numberSigned" />
+
+    </LinearLayout>
+
+  </LinearLayout>
 
   <LinearLayout
       android:id="@+id/container_mail"
@@ -28,7 +109,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/logo">
+      app:layout_constraintTop_toBottomOf="@+id/container_super">
 
     <TextView
         android:id="@+id/label_mail"
@@ -53,7 +134,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      app:layout_constraintBottom_toTopOf="@+id/container_button"
+      app:layout_constraintBottom_toTopOf="@+id/container_password_c"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +159,35 @@
   </LinearLayout>
 
   <LinearLayout
+      android:id="@+id/container_password_c"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toTopOf="@+id/container_button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/container_password">
+
+    <TextView
+        android:id="@+id/label_password_c"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/input_password_c"
+        android:text="@string/input_password_c" />
+
+    <EditText
+        android:id="@+id/input_password_c"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:background="@drawable/edittext_rounded"
+        android:contentDescription="@string/input_password"
+        android:ems="10"
+        android:inputType="textPassword" />
+  </LinearLayout>
+
+  <LinearLayout
       android:id="@+id/container_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -86,7 +196,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/container_password">
+      app:layout_constraintTop_toBottomOf="@+id/container_password_c">
 
     <Button
         android:id="@+id/buttonInscription"
@@ -106,4 +216,5 @@
         android:textColor="#FFFFFF"
         app:backgroundTint="@color/btn_blue" />
   </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

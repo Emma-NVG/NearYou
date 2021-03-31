@@ -7,7 +7,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.example.nearyou.databinding.ActivityLoginBinding
-import com.example.nearyou.model.Credential
+import com.example.nearyou.model.credential.LoginCredential
 import com.example.nearyou.model.response.ResponseCode
 import com.example.nearyou.model.user.UserDAO
 import kotlinx.coroutines.CoroutineScope
@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnC.setOnClickListener {
-            val credentials = Credential(input_mail.text.toString(),input_password.text.toString())
+            val credentials = LoginCredential(input_mail.text.toString(),input_password.text.toString())
             CoroutineScope(Dispatchers.IO).launch{
                 if(UserDAO.login(credentials).code == ResponseCode.S_SUCCESS){
                     val mainActivity = Intent(this@LoginActivity, MainActivity::class.java)
