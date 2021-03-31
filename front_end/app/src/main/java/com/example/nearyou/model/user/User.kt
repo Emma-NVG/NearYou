@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User(val ID: Int,
-                val email: String,
-                val password: String,
                 val url_profile: String,
                 val surname: String,
                 val first_name: String,
@@ -14,8 +12,9 @@ data class User(val ID: Int,
                 val custom_status: String,
                 val is_public: Int,
                 val links: Array<Link>,
-                val distance: String,
+                val distance: Int,
                 val created_date: String,
+                val edited_date: String,
                 val token: String) {
     companion object {
         val manager: UserManager = UserManager()

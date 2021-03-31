@@ -1,10 +1,14 @@
 package com.example.nearyou.model.response
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResponseBody<T>(val message: String,
-                           private val responseCode: String,
+                           @SerialName("code")
+                           private val _code: String,
                            val data: T) {
-    val code get() = ResponseCode.valueOf(responseCode)
+
+    val code: ResponseCode
+        get() = ResponseCode.valueOf(_code)
 }

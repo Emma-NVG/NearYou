@@ -23,7 +23,8 @@ const createAccountRoute = (app) => {
             .then(() => {
                 const responseData = new ResponseData("Account created with success !", ResponseCode.S_Success, { });
                 res.status(200).json(responseData)
-            }).catch(() => {
+            })
+            .catch(() => {
                 const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
                 res.status(500).json(responseData)
             })
@@ -34,7 +35,7 @@ const loginRoute = (app) => {
         login(req.body.email, req.body.password)
             .then((data) => {
                 if (!!data) {
-                    data["token"] = jwt.sign({ID: data.ID}, process.env.SECURITY_KEY);
+                    data["token"] = jwt.sign({ID: data.ID}, process.env.NEARYOU_SECURITY_KEY);
 
                     const responseData = new ResponseData("Login success !", ResponseCode.S_Success, data);
                     res.status(200).json(responseData)
@@ -42,10 +43,11 @@ const loginRoute = (app) => {
                     const responseData = new ResponseData("Login failed !", ResponseCode.E_UnknownError, new DataObject());
                     res.status(500).json(responseData)
                 }
-            }).catch(() => {
-            const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
-            res.status(500).json(responseData)
-        })
+            })
+            .catch(() => {
+                const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
+                res.status(500).json(responseData)
+            })
     });
 }
 const addLocationToUser = (app) => {
@@ -67,18 +69,21 @@ const retrieveAllUserNearRoute = (app) => {
         retrieveAllUserNear(req.params.id)
             .then((data) => {
                 if (!!data) {
-                    Promise.all(data).then((users) => {
-                        const responseData = new ResponseData("Successful recovery of users close to you !", ResponseCode.S_Success, users);
-                        res.status(200).json(responseData)
-                    }).catch(() => {
-                        const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
-                        res.status(500).json(responseData)
-                    })
+                    Promise.all(data)
+                        .then((users) => {
+                            const responseData = new ResponseData("Successful recovery of users close to you !", ResponseCode.S_Success, users);
+                            res.status(200).json(responseData)
+                        })
+                        .catch(() => {
+                            const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
+                            res.status(500).json(responseData)
+                        })
                 } else {
                     const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
                     res.status(500).json(responseData)
                 }
-            }).catch(() => {
+            })
+            .catch(() => {
                 const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
                 res.status(500).json(responseData)
             })
@@ -88,7 +93,7 @@ const retrieveAllUserNearRoute = (app) => {
 const generateAccessTokenRoute = (app) => {
     app.get("/api/:version/user/:id/access", authenticateModule, (req, res) => {
         const data = {
-            token : jwt.sign({ID: req.params.id}, process.env.SECURITY_KEY, { expiresIn: "1m"})
+            token : jwt.sign({ID: req.params.id}, process.env.NEARYOU_SECURITY_KEY, { expiresIn: "1m"})
         }
 
         const responseData = new ResponseData("Token access generated !", ResponseCode.S_Success, data);
@@ -107,7 +112,8 @@ const retrieveUserDataRoute = (app) => {
                     const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
                     res.status(500).json(responseData)
                 }
-            }).catch(() => {
+            })
+            .catch(() => {
                 const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
                 res.status(500).json(responseData)
             })

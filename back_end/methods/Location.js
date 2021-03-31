@@ -1,8 +1,6 @@
 const { connection } = require("../database/config");
 const Location = require("../models/DataObject/Location");
 const { retrieveUserData } = require("./User");
-const { retrieveAllUserLinks } = require("./Link");
-const User = require("../models/DataObject/User");
 const async = require("async");
 
 module.exports = {
