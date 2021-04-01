@@ -91,7 +91,7 @@ const loginRoute = (app) => {
                     const responseData = new ResponseData("Login success !", ResponseCode.S_Success, data);
                     res.status(200).json(responseData)
                 } else {
-                    const responseData = new ResponseData("Login failed !", ResponseCode.E_UnknownError, new DataObject());
+                    const responseData = new ResponseData("Login failed !", ResponseCode.E_WrongCredentials, new DataObject());
                     res.status(403).json(responseData)
                 }
             })

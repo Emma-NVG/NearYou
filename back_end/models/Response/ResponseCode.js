@@ -1,6 +1,7 @@
 module.exports = Object.freeze({
     E_UnknownRoute: 'E-UnknownRoute',
     E_UnknownError: 'E-UnknownError',
+    E_WrongCredentials: 'E-WrongCredentials',
     E_NoToken: 'E-NoToken',
     E_Unauthorized: 'E-Unauthorized',
     E_NoResource: 'E-NoResource',
