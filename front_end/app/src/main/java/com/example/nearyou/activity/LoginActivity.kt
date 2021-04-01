@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import com.example.nearyou.databinding.ActivityLoginBinding
 import com.example.nearyou.model.credential.LoginCredential
 import com.example.nearyou.model.response.ResponseCode
@@ -23,28 +22,35 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val input_mail: EditText = binding.inputMail
-        val input_password: EditText = binding.inputPassword
+        val inputMail: EditText = binding.inputMail
+        val inputPassword: EditText = binding.inputPassword
         val btnC: Button = binding.buttonConnection
         val btnI: Button = binding.buttonInscription
 
-        input_mail.addTextChangedListener {
-            if (it.toString().isEmpty()) {
-                input_mail.error = "Veuillez entrer une adresse mail"
-            } else {
-                if (!isEmailValid(it.toString())) {
-                    input_mail.error = "Adresse mail invalide"
-                }
-            }
-        }
-
         btnC.setOnClickListener {
-            val credentials = LoginCredential(input_mail.text.toString(), input_password.text.toString())
-            CoroutineScope(Dispatchers.IO).launch {
-                if (UserDAO.login(credentials).code == ResponseCode.S_SUCCESS) {
-                    val mainActivity = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(mainActivity)
+            if (isEmailValid(inputMail.text.toString())) {
+                val credentials = LoginCredential(inputMail.text.toString(), inputPassword.text.toString())
+                CoroutineScope(Dispatchers.IO).launch {
+                    val response = UserDAO.login(credentials)
+                    if (response.code == ResponseCode.S_SUCCESS) {
+                        val mainActivity = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(mainActivity)
+                    } else {
+                        when (response.code) {
+                            ResponseCode.E_EMAIL_TOO_LONG -> {
+                                inputMail.error = "Adresse mail trop longue !"
+                            }
+                            ResponseCode.E_BAD_EMAIL_FORMAT -> {
+                                inputMail.error = "Adresse mail invalide !"
+                            }
+                            ResponseCode.E_WRONG_CREDENTIALS -> {
+                                inputMail.error = "L'adresse mail ne correspond pas au mot de passe"
+                            }
+                        }
+                    }
                 }
+            } else {
+                inputMail.error = "Adresse mail invalide"
             }
         }
 

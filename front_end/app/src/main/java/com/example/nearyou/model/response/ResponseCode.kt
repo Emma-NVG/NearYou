@@ -5,6 +5,7 @@ enum class ResponseCode(code: String) {
     E_UNKNOWN_ROUTE("E-UnknownRoute"),
     E_UNKNOWN_ERROR("E-UnknownError"),
     E_NO_TOKEN("E-NoToken"),
+    E_WRONG_CREDENTIALS("E-WrongCredentials"),
     E_UNAUTHORIZED("E-Unauthorized"),
     E_NO_RESOURCE("E-NoResource"),
     E_AGE_TOO_YOUNG("E-AgeTooYoung"),
@@ -26,6 +27,7 @@ class ResponseCodeBuilder {
                 "E-UnknownRoute" -> ResponseCode.E_UNKNOWN_ROUTE
                 "E-UnknownError" -> ResponseCode.E_UNKNOWN_ERROR
                 "E-NoToken" -> ResponseCode.E_NO_TOKEN
+                "E-WrongCredentials" -> ResponseCode.E_WRONG_CREDENTIALS
                 "E-Unauthorized" -> ResponseCode.E_UNAUTHORIZED
                 "E-NoResource" -> ResponseCode.E_NO_RESOURCE
                 "E-AgeTooYoung" -> ResponseCode.E_AGE_TOO_YOUNG
