@@ -47,12 +47,13 @@ class InscriptionActivity : Activity() {
             if (listEmptyInput.isEmpty()) {
                 if (parseInt(inputAge.text.toString()) < 130) {
                     if (isEmailValid(inputMail.text.toString())) {
-                        if (inputPassword.text.toString().equals(inputPasswordC.text.toString())) {
+                        if (inputPassword.text.toString() == inputPasswordC.text.toString()) {
                             CoroutineScope(Dispatchers.Main).launch {
-                                val signCredentials = SignCredential(inputMail.text.toString(), inputPassword.text.toString(), inputName.text.toString(), inputFirstname.text.toString(), Integer.parseInt(inputAge.text.toString()))
-                                val response = UserDAO.signup(signCredentials)
+                                val signCredentials = SignCredential(inputMail.text.toString(), inputPassword.text.toString(), inputName.text.toString(), inputFirstname.text.toString(), parseInt(inputAge.text.toString()))
+                                val response = UserDAO.signUp(signCredentials)
                                 when (response.code) {
                                     ResponseCode.S_SUCCESS -> {
+                                        UserDAO.saveCredentialCache(signCredentials, applicationContext)
                                         startActivity(Intent(this@InscriptionActivity, MainActivity::class.java))
                                     }
                                     ResponseCode.E_AGE_TOO_YOUNG -> {
@@ -89,12 +90,12 @@ class InscriptionActivity : Activity() {
                         inputMail.error = "Adresse mail invalide"
                     }
                 } else {
-                    listEmptyInput.forEach {
-                        it.error = "Pas de champ rempli, pas d'inscription !"
-                    }
+                    inputAge.error = "Vous êtes trop vieux"
                 }
             } else {
-                inputAge.error = "Vous êtes trop vieux"
+                listEmptyInput.forEach {
+                    it.error = "Pas de champ rempli, pas d'inscription !"
+                }
             }
         }
 

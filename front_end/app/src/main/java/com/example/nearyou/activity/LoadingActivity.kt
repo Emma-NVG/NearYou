@@ -7,6 +7,11 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityLoadingBinding
+import com.example.nearyou.model.response.ResponseCode
+import com.example.nearyou.model.user.UserDAO
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 //TODO virer la barre en haut -> passer en Activity
 class LoadingActivity : Activity() {
@@ -26,8 +31,25 @@ class LoadingActivity : Activity() {
             override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationRepeat(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {
-                val loginActivity = Intent(this@LoadingActivity, LoginActivity::class.java)
-                startActivity(loginActivity)
+                val credential = UserDAO.getCredential(this@LoadingActivity)
+                if (credential != null) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val response = UserDAO.login(credential)
+                        when (response.code) {
+                            ResponseCode.S_SUCCESS -> {
+                                startActivity(Intent(this@LoadingActivity, MainActivity::class.java))
+                            }
+                            else -> {
+                                UserDAO.removeCredential(this@LoadingActivity)
+                                val loginActivity = Intent(this@LoadingActivity, LoginActivity::class.java)
+                                startActivity(loginActivity)
+                            }
+                        }
+                    }
+                } else {
+                    val loginActivity = Intent(this@LoadingActivity, LoginActivity::class.java)
+                    startActivity(loginActivity)
+                }
             }
         })
         binding.loadingLogo.startAnimation(fadeIn)

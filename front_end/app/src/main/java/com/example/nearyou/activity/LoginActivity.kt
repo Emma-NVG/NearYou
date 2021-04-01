@@ -36,6 +36,7 @@ class LoginActivity : Activity() {
 
                     when (response.code) {
                         ResponseCode.S_SUCCESS -> {
+                            UserDAO.saveCredentialCache(credentials, applicationContext)
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         }
                         ResponseCode.E_EMAIL_TOO_LONG -> {
