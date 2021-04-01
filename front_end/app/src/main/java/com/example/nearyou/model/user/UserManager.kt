@@ -20,10 +20,10 @@ class UserManager {
         return try {
             val data: String = client.post("https://www.nearyou.iut.apokalypt.fr/api/1.0/user/login") {
                 body = FormDataContent(
-                    Parameters.build {
-                        append("email", credential.login)
-                        append("password", credential.password)
-                    }
+                        Parameters.build {
+                            append("email", credential.login)
+                            append("password", credential.password)
+                        }
                 )
             }
 
@@ -42,13 +42,13 @@ class UserManager {
         return try {
             val data: String = client.post("https://www.nearyou.iut.apokalypt.fr/api/1.0/user") {
                 body = FormDataContent(
-                    Parameters.build {
-                        append("email", credential.email)
-                        append("password", credential.password)
-                        append("surname", credential.surname)
-                        append("first_name", credential.first_name)
-                        append("age", credential.age.toString())
-                    }
+                        Parameters.build {
+                            append("email", credential.email)
+                            append("password", credential.password)
+                            append("surname", credential.surname)
+                            append("first_name", credential.first_name)
+                            append("age", credential.age.toString())
+                        }
                 )
             }
 

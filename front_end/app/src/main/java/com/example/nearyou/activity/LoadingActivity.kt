@@ -18,7 +18,7 @@ class LoadingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        fadeIn.setAnimationListener(object: Animation.AnimationListener {
+        fadeIn.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationRepeat(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {

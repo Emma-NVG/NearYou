@@ -23,10 +23,10 @@ class LocationManager {
                 header("Authorization", "Bearer ${UserDAO.user!!.token}")
 
                 body = FormDataContent(
-                    Parameters.build {
-                        append("latitude", location.latitude.toString())
-                        append("longitude", location.longitude.toString())
-                    }
+                        Parameters.build {
+                            append("latitude", location.latitude.toString())
+                            append("longitude", location.longitude.toString())
+                        }
                 )
             }
 

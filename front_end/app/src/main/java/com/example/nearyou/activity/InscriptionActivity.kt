@@ -2,12 +2,13 @@ package com.example.nearyou.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import com.example.nearyou.databinding.ActivityInscriptionBinding
 import com.example.nearyou.model.credential.SignCredential
+import com.example.nearyou.model.response.ResponseCode
 import com.example.nearyou.model.user.UserDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,40 +22,74 @@ class InscriptionActivity : AppCompatActivity() {
         binding = ActivityInscriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val input_mail: EditText = binding.inputMail
-        val input_password: EditText = binding.inputPassword
-        val input_password_c: EditText = binding.inputPasswordC
-        val input_age: EditText = binding.inputAge
-        val input_name: EditText = binding.inputName
-        val input_fname: EditText = binding.inputFname
+        val inputMail: EditText = binding.inputMail
+        val inputPassword: EditText = binding.inputPassword
+        val inputPasswordC: EditText = binding.inputPasswordC
+        val inputAge: EditText = binding.inputAge
+        val inputName: EditText = binding.inputName
+        val inputFirstname: EditText = binding.inputFname
 
         val btnC: Button = binding.buttonConnection
         val btnI: Button = binding.buttonInscription
 
-        input_mail.addTextChangedListener {
-            if (it.toString().isEmpty()){
-                input_mail.error="Veuillez entrer une adresse mail"
-            }else{
-                if (! isEmailValid( it.toString())) {
-                    input_mail.error="Adresse mail invalide"
-                }
-            }
-        }
 
-        //TODO refactor en fonction/method extract
         btnI.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch{
-                if (input_age.toString().isEmpty() || input_fname.toString().isEmpty() || input_password.toString().isEmpty() || input_age.toString().isEmpty() ||input_name.toString().isEmpty() || input_password_c.toString().isEmpty() ) {
-                    if(isEmailValid(input_mail.text.toString())){
-                        if (input_password.text.toString().equals(input_password_c.text.toString())) {
-                            val signCredentials = SignCredential(input_mail.text.toString(),input_password.text.toString(),input_name.text.toString(),input_fname.text.toString(), Integer.parseInt(input_age.text.toString()))
-                            UserDAO.signup(signCredentials)
-                            val mainActivity = Intent(this@InscriptionActivity, MainActivity::class.java)
-                            startActivity(mainActivity)
-                        }else {
-                            input_password_c.setError("Mot de passe différent")
+            val list = arrayOf(
+                    inputMail,
+                    inputPassword,
+                    inputPasswordC,
+                    inputAge,
+                    inputName,
+                    inputFirstname
+            )
+            val listEmptyInput = list.filter { it.text.isEmpty() }
+            Log.e("tag", inputMail.text.toString())
+            if (listEmptyInput.isEmpty()) {
+                if (isEmailValid(inputMail.text.toString())) {
+                    if (inputPassword.text.toString().equals(inputPasswordC.text.toString())) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val signCredentials = SignCredential(inputMail.text.toString(), inputPassword.text.toString(), inputName.text.toString(), inputFirstname.text.toString(), Integer.parseInt(inputAge.text.toString()))
+                            val response = UserDAO.signup(signCredentials)
+                            when (response.code) {
+                                ResponseCode.S_SUCCESS -> {
+                                    val mainActivity = Intent(this@InscriptionActivity, MainActivity::class.java)
+                                    startActivity(mainActivity)
+                                }
+                                ResponseCode.E_AGE_TOO_YOUNG -> {
+                                    inputAge.error = "Vous êtes trop jeune !"
+                                }
+                                ResponseCode.E_EMAIL_TOO_LONG -> {
+                                    inputMail.error = "Adresse mail trop longue !"
+                                }
+                                ResponseCode.E_BAD_EMAIL_FORMAT -> {
+                                    inputMail.error = "Adresse mail invalide !"
+                                }
+                                ResponseCode.E_EMAIL_KNOWN -> {
+                                    inputMail.error = "Adresse mail déjà utilisée !"
+                                }
+                                ResponseCode.E_FIRST_NAME_TOO_LONG -> {
+                                    inputFirstname.error = "Prénom trop long !"
+                                }
+                                ResponseCode.E_SURNAME_TOO_LONG -> {
+                                    inputName.error = "Nom trop long !"
+                                }
+                                ResponseCode.E_PASSWORD_TOO_LONG -> {
+                                    inputPassword.error = "Mot de passe trop long !"
+                                }
+                                ResponseCode.E_PASSWORD_TOO_SHORT -> {
+                                    inputPassword.error = "Mot de passe trop court !"
+                                }
+                            }
                         }
+                    } else {
+                        inputPasswordC.error = "Mot de passe différent"
                     }
+                } else {
+                    inputMail.error = "Adresse mail invalide"
+                }
+            } else {
+                listEmptyInput.forEach {
+                    it.error = "Le champ ne doit pas être vide !"
                 }
             }
         }

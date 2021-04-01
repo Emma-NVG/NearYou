@@ -207,22 +207,22 @@
       app:layout_constraintTop_toBottomOf="@+id/container_password_c">
 
     <Button
-        android:id="@+id/buttonConnection"
+        android:id="@+id/button_connection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_connection"
         android:text="@string/btn_connection"
         android:textColor="#FFFFFF"
-        app:backgroundTint="@color/btn_blue" />
+        app:backgroundTint="@color/btn_orange" />
 
     <Button
-        android:id="@+id/buttonInscription"
+        android:id="@+id/button_inscription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_connection"
         android:text="@string/btn_inscription"
         android:textColor="#FFFFFF"
-        app:backgroundTint="@color/btn_orange" />
+        app:backgroundTint="@color/btn_blue" />
 
   </LinearLayout>
 

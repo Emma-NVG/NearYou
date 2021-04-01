@@ -48,14 +48,14 @@ class LocationBackgroundService : Service() {
         chan.lightColor = Color.BLUE
         chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         val manager =
-            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)!!
+                (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)!!
         manager.createNotificationChannel(chan)
         val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
         val notification: Notification = notificationBuilder.setOngoing(true)
-            .setContentTitle("App is running in background")
-            .setPriority(NotificationManager.IMPORTANCE_NONE)
-            .setCategory(Notification.CATEGORY_SERVICE)
-            .build()
+                .setContentTitle("App is running in background")
+                .setPriority(NotificationManager.IMPORTANCE_NONE)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .build()
         startForeground(2, notification)
     }
 
@@ -64,9 +64,9 @@ class LocationBackgroundService : Service() {
         super.onStartCommand(intent, flags, startId)
 
         if (Permission.isPermissionsAllowed(
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
-                this
-            )
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                        this
+                )
         ) {
             isRunning = true
 
@@ -82,7 +82,7 @@ class LocationBackgroundService : Service() {
             }
 
             LocationServices.getFusedLocationProviderClient(this)
-                .requestLocationUpdates(locationRequest, mLocationCallback, Looper.getMainLooper())
+                    .requestLocationUpdates(locationRequest, mLocationCallback, Looper.getMainLooper())
         }
 
         return START_STICKY

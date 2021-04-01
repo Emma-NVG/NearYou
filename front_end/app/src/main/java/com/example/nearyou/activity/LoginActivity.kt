@@ -29,19 +29,19 @@ class LoginActivity : AppCompatActivity() {
         val btnI: Button = binding.buttonInscription
 
         input_mail.addTextChangedListener {
-            if (it.toString().isEmpty()){
-                input_mail.error="Veuillez entrer une adresse mail"
-            }else{
-                if (! isEmailValid( it.toString())) {
-                    input_mail.error="Adresse mail invalide"
+            if (it.toString().isEmpty()) {
+                input_mail.error = "Veuillez entrer une adresse mail"
+            } else {
+                if (!isEmailValid(it.toString())) {
+                    input_mail.error = "Adresse mail invalide"
                 }
             }
         }
 
         btnC.setOnClickListener {
-            val credentials = LoginCredential(input_mail.text.toString(),input_password.text.toString())
-            CoroutineScope(Dispatchers.IO).launch{
-                if(UserDAO.login(credentials).code == ResponseCode.S_SUCCESS){
+            val credentials = LoginCredential(input_mail.text.toString(), input_password.text.toString())
+            CoroutineScope(Dispatchers.IO).launch {
+                if (UserDAO.login(credentials).code == ResponseCode.S_SUCCESS) {
                     val mainActivity = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(mainActivity)
                 }

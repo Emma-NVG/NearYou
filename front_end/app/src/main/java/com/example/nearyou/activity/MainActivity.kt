@@ -41,15 +41,15 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home,
-                R.id.nav_scan_qr,
-                R.id.nav_profile,
-                R.id.nav_profile_edit,
-                R.id.nav_profile_access,
-                R.id.nav_settings
-            ),
-            drawerLayout
+                setOf(
+                        R.id.nav_home,
+                        R.id.nav_scan_qr,
+                        R.id.nav_profile,
+                        R.id.nav_profile_edit,
+                        R.id.nav_profile_access,
+                        R.id.nav_settings
+                ),
+                drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if(UserDAO.user == null){
+        if (UserDAO.user == null) {
             val loadingActivity = Intent(this@MainActivity, LoadingActivity::class.java)
             startActivity(loadingActivity)
         }
@@ -89,11 +89,13 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+
     // This method allows to go to the fragment corresponding to the ID of the clicked menu item
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
+
     // This method allows to go to the fragment corresponding to the ID of the clicked navigation item
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -123,8 +125,8 @@ class MainActivity : AppCompatActivity() {
         val locationBackgroundService = LocationBackgroundService()
         if (!LocationBackgroundService.isRunning) {
             val permissions = arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
             )
             if (Permission.isPermissionsAllowed(permissions, this)) {
                 val serviceIntent = Intent(this, locationBackgroundService.javaClass)
@@ -141,15 +143,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSnackBar() {
         Snackbar.make(binding.root, R.string.location_needed, Snackbar.LENGTH_SHORT)
-            .setAction(R.string.menu_settings) {
-                val uri = Uri.fromParts("package", packageName, null)
+                .setAction(R.string.menu_settings) {
+                    val uri = Uri.fromParts("package", packageName, null)
 
-                val intent = Intent()
-                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                intent.data = uri
-                startActivityForResult(intent, REQUEST_PERMISSION_LOCATION_SETTINGS)
-            }
-            .show()
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    intent.data = uri
+                    startActivityForResult(intent, REQUEST_PERMISSION_LOCATION_SETTINGS)
+                }
+                .show()
     }
 
     companion object {
