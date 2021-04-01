@@ -24,4 +24,6 @@
     <string name="input_mail">Mail</string>
     <string name="input_password">Mot de passe</string>
     <string name="btn_connection">Connexion</string>
+
+    <string name="location_needed">Nous avons besoin d\'avoir accès à votre position !</string>
 </resources>
