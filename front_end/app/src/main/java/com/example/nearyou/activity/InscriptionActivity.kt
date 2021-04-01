@@ -2,7 +2,6 @@ package com.example.nearyou.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +12,7 @@ import com.example.nearyou.model.user.UserDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Integer.parseInt
 
 class InscriptionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInscriptionBinding
@@ -43,54 +43,58 @@ class InscriptionActivity : AppCompatActivity() {
                     inputFirstname
             )
             val listEmptyInput = list.filter { it.text.isEmpty() }
-            Log.e("tag", inputMail.text.toString())
+
             if (listEmptyInput.isEmpty()) {
-                if (isEmailValid(inputMail.text.toString())) {
-                    if (inputPassword.text.toString().equals(inputPasswordC.text.toString())) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val signCredentials = SignCredential(inputMail.text.toString(), inputPassword.text.toString(), inputName.text.toString(), inputFirstname.text.toString(), Integer.parseInt(inputAge.text.toString()))
-                            val response = UserDAO.signup(signCredentials)
-                            when (response.code) {
-                                ResponseCode.S_SUCCESS -> {
-                                    val mainActivity = Intent(this@InscriptionActivity, MainActivity::class.java)
-                                    startActivity(mainActivity)
-                                }
-                                ResponseCode.E_AGE_TOO_YOUNG -> {
-                                    inputAge.error = "Vous êtes trop jeune !"
-                                }
-                                ResponseCode.E_EMAIL_TOO_LONG -> {
-                                    inputMail.error = "Adresse mail trop longue !"
-                                }
-                                ResponseCode.E_BAD_EMAIL_FORMAT -> {
-                                    inputMail.error = "Adresse mail invalide !"
-                                }
-                                ResponseCode.E_EMAIL_KNOWN -> {
-                                    inputMail.error = "Adresse mail déjà utilisée !"
-                                }
-                                ResponseCode.E_FIRST_NAME_TOO_LONG -> {
-                                    inputFirstname.error = "Prénom trop long !"
-                                }
-                                ResponseCode.E_SURNAME_TOO_LONG -> {
-                                    inputName.error = "Nom trop long !"
-                                }
-                                ResponseCode.E_PASSWORD_TOO_LONG -> {
-                                    inputPassword.error = "Mot de passe trop long !"
-                                }
-                                ResponseCode.E_PASSWORD_TOO_SHORT -> {
-                                    inputPassword.error = "Mot de passe trop court !"
+                if (parseInt(inputAge.text.toString()) < 130) {
+                    if (isEmailValid(inputMail.text.toString())) {
+                        if (inputPassword.text.toString().equals(inputPasswordC.text.toString())) {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                val signCredentials = SignCredential(inputMail.text.toString(), inputPassword.text.toString(), inputName.text.toString(), inputFirstname.text.toString(), Integer.parseInt(inputAge.text.toString()))
+                                val response = UserDAO.signup(signCredentials)
+                                when (response.code) {
+                                    ResponseCode.S_SUCCESS -> {
+                                        val mainActivity = Intent(this@InscriptionActivity, MainActivity::class.java)
+                                        startActivity(mainActivity)
+                                    }
+                                    ResponseCode.E_AGE_TOO_YOUNG -> {
+                                        inputAge.error = "Vous êtes trop jeune !"
+                                    }
+                                    ResponseCode.E_EMAIL_TOO_LONG -> {
+                                        inputMail.error = "Adresse mail trop longue !"
+                                    }
+                                    ResponseCode.E_BAD_EMAIL_FORMAT -> {
+                                        inputMail.error = "Adresse mail invalide !"
+                                    }
+                                    ResponseCode.E_EMAIL_KNOWN -> {
+                                        inputMail.error = "Adresse mail déjà utilisée !"
+                                    }
+                                    ResponseCode.E_FIRST_NAME_TOO_LONG -> {
+                                        inputFirstname.error = "Prénom trop long !"
+                                    }
+                                    ResponseCode.E_SURNAME_TOO_LONG -> {
+                                        inputName.error = "Nom trop long !"
+                                    }
+                                    ResponseCode.E_PASSWORD_TOO_LONG -> {
+                                        inputPassword.error = "Mot de passe trop long !"
+                                    }
+                                    ResponseCode.E_PASSWORD_TOO_SHORT -> {
+                                        inputPassword.error = "Mot de passe trop court !"
+                                    }
                                 }
                             }
+                        } else {
+                            inputPasswordC.error = "Mot de passe différent"
                         }
                     } else {
-                        inputPasswordC.error = "Mot de passe différent"
+                        inputMail.error = "Adresse mail invalide"
                     }
                 } else {
-                    inputMail.error = "Adresse mail invalide"
+                    listEmptyInput.forEach {
+                        it.error = "Pas de champ rempli, pas d'inscription !"
+                    }
                 }
             } else {
-                listEmptyInput.forEach {
-                    it.error = "Le champ ne doit pas être vide !"
-                }
+                inputAge.error = "Vous êtes trop vieux"
             }
         }
 
