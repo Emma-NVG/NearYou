@@ -1,10 +1,10 @@
 package com.example.nearyou.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.example.nearyou.databinding.ActivityLoginBinding
 import com.example.nearyou.model.credential.LoginCredential
@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : Activity() {
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

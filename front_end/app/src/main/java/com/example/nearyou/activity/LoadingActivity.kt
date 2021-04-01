@@ -1,15 +1,15 @@
 package com.example.nearyou.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityLoadingBinding
 
 //TODO virer la barre en haut -> passer en Activity
-class LoadingActivity : AppCompatActivity() {
+class LoadingActivity : Activity() {
     private lateinit var binding: ActivityLoadingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

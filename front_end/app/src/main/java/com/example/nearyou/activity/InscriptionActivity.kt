@@ -1,10 +1,10 @@
 package com.example.nearyou.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.example.nearyou.databinding.ActivityInscriptionBinding
 import com.example.nearyou.model.credential.SignCredential
@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class InscriptionActivity : AppCompatActivity() {
+class InscriptionActivity : Activity() {
     private lateinit var binding: ActivityInscriptionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

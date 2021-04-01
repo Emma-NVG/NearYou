@@ -9,102 +9,147 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="323dp"
-        android:layout_height="225dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/logo_img"
-        app:layout_constraintBottom_toTopOf="@+id/container_mail"
+        android:cropToPadding="false"
+        android:src="@mipmap/ic_logo_foreground"
+        app:layout_constraintBottom_toTopOf="@+id/container_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_logo_foreground" />
+        app:layout_constraintVertical_bias="0.19" />
 
-    <LinearLayout
-        android:id="@+id/container_mail"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_input"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/container_password"
+        app:layout_constraintBottom_toTopOf="@+id/container_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo">
 
-        <TextView
-            android:id="@+id/label_mail"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/container_mail"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:labelFor="@id/input_mail"
-            android:text="@string/input_mail" />
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/container_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/input_mail"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/label_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/input_mail"
+                android:text="@string/input_mail"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/input_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
+                android:background="@drawable/edittext_rounded"
+                android:contentDescription="@string/input_mail"
+                android:ems="14"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_password"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:background="@drawable/edittext_rounded"
-            android:contentDescription="@string/input_mail"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
-    </LinearLayout>
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_mail">
 
-    <LinearLayout
-        android:id="@+id/container_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/container_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_mail">
+            <TextView
+                android:id="@+id/label_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/input_password"
+                android:text="@string/input_password"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/label_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@id/input_password"
-            android:text="@string/input_password" />
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
+                android:background="@drawable/edittext_rounded"
+                android:contentDescription="@string/input_password"
+                android:ems="14"
+                android:inputType="textPassword" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <EditText
-            android:id="@+id/input_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:background="@drawable/edittext_rounded"
-            android:contentDescription="@string/input_password"
-            android:ems="10"
-            android:inputType="textPassword" />
-    </LinearLayout>
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_password">
+        app:layout_constraintTop_toBottomOf="@+id/container_input">
 
         <Button
-            android:id="@+id/buttonInscription"
+            android:id="@+id/button_inscription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_connection"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/second_btn"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="@string/btn_inscription"
             android:textColor="#FFFFFF"
-            app:backgroundTint="@color/btn_orange" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_connection"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/buttonConnection"
+            android:id="@+id/button_connection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_connection"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/main_btn"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
             android:text="@string/btn_connection"
             android:textColor="#FFFFFF"
-            app:backgroundTint="@color/btn_blue" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_inscription"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
