@@ -1,6 +1,5 @@
 package com.example.nearyou.activity
 
-import android.content.Intent
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,8 +16,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityMainBinding
-import com.example.nearyou.model.user.UserDAO
 import com.example.nearyou.model.Permission
+import com.example.nearyou.model.user.UserDAO
 import com.example.nearyou.service.LocationBackgroundService
 import com.example.nearyou.service.RestarterLocationBackgroundService
 import com.google.android.material.navigation.NavigationView
