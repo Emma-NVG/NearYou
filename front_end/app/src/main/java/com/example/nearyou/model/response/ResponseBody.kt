@@ -10,5 +10,5 @@ data class ResponseBody<T>(val message: String,
                            val data: T) {
 
     val code: ResponseCode
-        get() = ResponseCode.valueOf(_code)
+        get() = ResponseCodeBuilder.getResponseCodeInstance(_code)
 }

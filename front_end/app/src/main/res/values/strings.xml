@@ -29,4 +29,6 @@
     <string name="input_password_c">Confirmation mot de passe</string>
     <string name="btn_connection">Connexion</string>
     <string name="btn_inscription">Inscription</string>
+
+    <string name="location_needed">Nous avons besoin d\'avoir accès à votre position !</string>
 </resources>

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nearyou" >
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,8 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NearYou" >
-        <activity android:name=".activity.InscriptionActivity" >
-        </activity>
+        <receiver
+            android:name=".service.RestarterLocationBackgroundService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="restartservice" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".activity.InscriptionActivity" />
         <activity android:name=".activity.LoadingActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity
@@ -25,6 +36,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.LocationBackgroundService"
+            android:enabled="true" >
+        </service>
     </application>
 
 </manifest>
