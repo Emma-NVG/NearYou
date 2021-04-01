@@ -55,7 +55,13 @@
           android:background="@drawable/edittext_rounded"
           android:ems="14"
           android:inputType="text"
-          android:autofillHints="" />
+          android:autofillHints=""
+          android:paddingStart="10dp"
+          android:paddingLeft="10dp"
+          android:paddingTop="10dp"
+          android:paddingEnd="10dp"
+          android:paddingRight="10dp"
+          android:paddingBottom="10dp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,7 +100,13 @@
             android:autofillHints=""
             android:background="@drawable/edittext_rounded"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp" />
 
       </LinearLayout>
 
@@ -122,7 +134,13 @@
             android:autofillHints=""
             android:background="@drawable/edittext_rounded"
             android:ems="3"
-            android:inputType="number" />
+            android:inputType="number"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp" />
 
       </LinearLayout>
 
@@ -154,7 +172,13 @@
           android:background="@drawable/edittext_rounded"
           android:contentDescription="@string/input_mail"
           android:ems="14"
-          android:inputType="textEmailAddress" />
+          android:inputType="textEmailAddress"
+          android:paddingStart="10dp"
+          android:paddingLeft="10dp"
+          android:paddingTop="10dp"
+          android:paddingEnd="10dp"
+          android:paddingRight="10dp"
+          android:paddingBottom="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -183,7 +207,13 @@
           android:background="@drawable/edittext_rounded"
           android:contentDescription="@string/input_password"
           android:ems="14"
-          android:inputType="textPassword" />
+          android:inputType="textPassword"
+          android:paddingStart="10dp"
+          android:paddingLeft="10dp"
+          android:paddingTop="10dp"
+          android:paddingEnd="10dp"
+          android:paddingRight="10dp"
+          android:paddingBottom="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -212,7 +242,13 @@
           android:background="@drawable/edittext_rounded"
           android:contentDescription="@string/input_password"
           android:ems="14"
-          android:inputType="textPassword" />
+          android:inputType="textPassword"
+          android:paddingStart="10dp"
+          android:paddingLeft="10dp"
+          android:paddingTop="10dp"
+          android:paddingEnd="10dp"
+          android:paddingRight="10dp"
+          android:paddingBottom="10dp" />
     </LinearLayout>
   </androidx.constraintlayout.widget.ConstraintLayout>
 

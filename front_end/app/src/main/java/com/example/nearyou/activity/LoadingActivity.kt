@@ -16,6 +16,10 @@ class LoadingActivity : Activity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         fadeIn.setAnimationListener(object : Animation.AnimationListener {

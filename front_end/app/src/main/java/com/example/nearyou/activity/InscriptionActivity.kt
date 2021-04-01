@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
 import com.example.nearyou.databinding.ActivityInscriptionBinding
 import com.example.nearyou.model.credential.SignCredential
 import com.example.nearyou.model.response.ResponseCode
@@ -36,12 +35,12 @@ class InscriptionActivity : Activity() {
 
         btnI.setOnClickListener {
             val list = arrayOf(
-                    inputMail,
-                    inputPassword,
-                    inputPasswordC,
-                    inputAge,
-                    inputName,
-                    inputFirstname
+                inputMail,
+                inputPassword,
+                inputPasswordC,
+                inputAge,
+                inputName,
+                inputFirstname
             )
             val listEmptyInput = list.filter { it.text.isEmpty() }
 
@@ -49,13 +48,12 @@ class InscriptionActivity : Activity() {
                 if (parseInt(inputAge.text.toString()) < 130) {
                     if (isEmailValid(inputMail.text.toString())) {
                         if (inputPassword.text.toString().equals(inputPasswordC.text.toString())) {
-                            CoroutineScope(Dispatchers.IO).launch {
+                            CoroutineScope(Dispatchers.Main).launch {
                                 val signCredentials = SignCredential(inputMail.text.toString(), inputPassword.text.toString(), inputName.text.toString(), inputFirstname.text.toString(), Integer.parseInt(inputAge.text.toString()))
                                 val response = UserDAO.signup(signCredentials)
                                 when (response.code) {
                                     ResponseCode.S_SUCCESS -> {
-                                        val mainActivity = Intent(this@InscriptionActivity, MainActivity::class.java)
-                                        startActivity(mainActivity)
+                                        startActivity(Intent(this@InscriptionActivity, MainActivity::class.java))
                                     }
                                     ResponseCode.E_AGE_TOO_YOUNG -> {
                                         inputAge.error = "Vous êtes trop jeune !"
@@ -81,6 +79,7 @@ class InscriptionActivity : Activity() {
                                     ResponseCode.E_PASSWORD_TOO_SHORT -> {
                                         inputPassword.error = "Mot de passe trop court !"
                                     }
+                                    else -> inputMail.error = "Une erreur inconnue est survenue"
                                 }
                             }
                         } else {
@@ -103,7 +102,14 @@ class InscriptionActivity : Activity() {
             val loginActivity = Intent(this@InscriptionActivity, LoginActivity::class.java)
             startActivity(loginActivity)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (UserDAO.user != null) {
+            startActivity(Intent(this@InscriptionActivity, MainActivity::class.java))
+        }
     }
 
     //TODO refactor

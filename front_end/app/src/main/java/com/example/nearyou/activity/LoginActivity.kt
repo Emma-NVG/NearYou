@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
 import com.example.nearyou.databinding.ActivityLoginBinding
 import com.example.nearyou.model.credential.LoginCredential
 import com.example.nearyou.model.response.ResponseCode
@@ -31,23 +30,24 @@ class LoginActivity : Activity() {
         btnC.setOnClickListener {
             if (isEmailValid(inputMail.text.toString())) {
                 val credentials = LoginCredential(inputMail.text.toString(), inputPassword.text.toString())
-                CoroutineScope(Dispatchers.IO).launch {
+
+                CoroutineScope(Dispatchers.Main).launch {
                     val response = UserDAO.login(credentials)
-                    if (response.code == ResponseCode.S_SUCCESS) {
-                        val mainActivity = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(mainActivity)
-                    } else {
-                        when (response.code) {
-                            ResponseCode.E_EMAIL_TOO_LONG -> {
-                                inputMail.error = "Adresse mail trop longue !"
-                            }
-                            ResponseCode.E_BAD_EMAIL_FORMAT -> {
-                                inputMail.error = "Adresse mail invalide !"
-                            }
-                            ResponseCode.E_WRONG_CREDENTIALS -> {
-                                inputMail.error = "L'adresse mail ne correspond pas au mot de passe"
-                            }
+
+                    when (response.code) {
+                        ResponseCode.S_SUCCESS -> {
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         }
+                        ResponseCode.E_EMAIL_TOO_LONG -> {
+                            inputMail.error = "Adresse mail trop longue !"
+                        }
+                        ResponseCode.E_BAD_EMAIL_FORMAT -> {
+                            inputMail.error = "Adresse mail invalide !"
+                        }
+                        ResponseCode.E_WRONG_CREDENTIALS -> {
+                            inputMail.error = "L'adresse mail ne correspond pas au mot de passe"
+                        }
+                        else -> inputMail.error = "Erreur inconnue"
                     }
                 }
             } else {
@@ -59,7 +59,16 @@ class LoginActivity : Activity() {
             val inscriptionActivity = Intent(this@LoginActivity, InscriptionActivity::class.java)
             startActivity(inscriptionActivity)
         }
+    }
 
+
+
+    override fun onResume() {
+        super.onResume()
+
+        if (UserDAO.user != null) {
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        }
     }
 
     private fun isEmailValid(email: String): Boolean {
