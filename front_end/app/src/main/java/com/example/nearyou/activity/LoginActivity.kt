@@ -30,10 +30,10 @@ class LoginActivity : AppCompatActivity() {
 
         input_mail.addTextChangedListener {
             if (it.toString().isEmpty()){
-                input_mail.setError("Veuillez entrer une adresse mail")
+                input_mail.error="Veuillez entrer une adresse mail"
             }else{
                 if (! isEmailValid( it.toString())) {
-                    input_mail.setError("Adresse mail invalide")
+                    input_mail.error="Adresse mail invalide"
                 }
             }
         }
