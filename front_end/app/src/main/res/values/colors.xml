@@ -12,4 +12,6 @@
 
     <color name="btn_blue">#0692FF</color>
     <color name="btn_orange">#FF9800</color>
+
+    <color name="gray">#E4E3E3</color>
 </resources>
