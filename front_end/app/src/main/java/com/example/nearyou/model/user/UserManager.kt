@@ -65,7 +65,7 @@ class UserManager {
         val client = HttpClient(Android) { }
 
         return try {
-            val urlString = "https://www.nearyou.iut.apokalypt.fr/api/1.0/user/${UserDAO.user!!.ID}/location"
+            val urlString = "https://www.nearyou.iut.apokalypt.fr/api/1.0/user/${UserDAO.user!!.ID}/near"
             val data: String = client.get(urlString) {
                 header("Authorization", "Bearer ${UserDAO.user!!.token}")
             }
