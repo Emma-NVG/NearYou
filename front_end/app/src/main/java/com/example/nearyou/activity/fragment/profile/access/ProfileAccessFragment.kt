@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.nearyou.databinding.FragmentProfileAccessBinding
 import com.example.nearyou.model.user.UserDAO
@@ -27,6 +28,16 @@ class ProfileAccessFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileAccessBinding.inflate(inflater, container, false)
+
+        val name: TextView = binding.name
+        val age: TextView = binding.age
+        val status: TextView = binding.status
+
+        name.text = "${UserDAO.user?.first_name.toString()} ${
+            UserDAO.user?.surname.toString().toUpperCase()
+        }"
+        age.text = "${UserDAO.user?.age.toString()} ans"
+        status.text = UserDAO.user?.custom_status.toString()
 
         return binding.root
     }
