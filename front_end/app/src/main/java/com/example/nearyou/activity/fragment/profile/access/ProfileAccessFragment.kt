@@ -13,6 +13,7 @@ import com.example.nearyou.model.user.UserDAO
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,6 +38,10 @@ class ProfileAccessFragment : Fragment() {
         val name: TextView = binding.name
         val age: TextView = binding.age
         val status: TextView = binding.status
+
+        Picasso.get()
+            .load(UserDAO.user!!.url_profile)
+            .into(binding.imgProfile)
 
         name.text = "${UserDAO.user?.first_name.toString()} ${
             UserDAO.user?.surname.toString().toUpperCase()

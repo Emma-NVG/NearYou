@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nearyou.R
 import com.example.nearyou.databinding.FragmentHomeBinding
@@ -57,7 +58,7 @@ class HomeFragment : Fragment() {
                     ResponseCode.S_SUCCESS -> {
                         if (listPerson.isNotEmpty()) {
                             recyclerView.layoutManager = LinearLayoutManager(context)
-                            recyclerView.adapter = ListPersonRecyclerAdapter(listPerson)
+                            recyclerView.adapter = ListPersonRecyclerAdapter(listPerson, findNavController())
                             recyclerView.visibility = View.VISIBLE
 
                             title.text = getString(R.string.title_list_person)

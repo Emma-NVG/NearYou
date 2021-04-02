@@ -38,4 +38,7 @@
     <string name="unknown_error">Une erreur inconnue est survenue ! veuillez réessayer plus tard !</string>
     <string name="no_user">Aucuns utilisateurs correspondant aux données trouvées !</string>
     <string name="invalid_data">Données invalides !</string>
+
+    <string name="display_age">%d ans</string>
+    <string name="display_name">%s %s</string>
 </resources>

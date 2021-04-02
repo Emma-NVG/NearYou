@@ -1,6 +1,7 @@
 package com.example.nearyou.activity.fragment.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nearyou.R
 import com.example.nearyou.databinding.FragmentProfileBinding
 import com.example.nearyou.model.Link
 import com.example.nearyou.model.user.UserDAO
+import com.example.nearyou.model.user.member.Member
+import com.squareup.picasso.Picasso
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import java.util.*
 
 class ProfileFragment : Fragment() {
 
@@ -29,29 +36,60 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val profilePicture: ImageView = binding.profilePicture
-
-        val profileName: TextView = binding.profileName
-        profileName.text = "${UserDAO.user?.first_name} ${UserDAO.user?.surname}"
-
-        val profileSeparator: ImageView = binding.profileSeparator
-
-        val profileAge: TextView = binding.profileAge
-        profileAge.text = "${UserDAO.user?.age} ans"
-
-        val profileStatus: TextView = binding.profileStatus
-        profileStatus.text = "${UserDAO.user?.custom_status}"
-
-        var medias = arrayOf(
-            Link(0, "https://www.linkedin.com/in/leanarenon/", "", ""),
-            Link(1, "https://www.facebook.com/leana.renon.96", "","")
-        )
-
-        var profileMedias: RecyclerView = binding.profileMedias
-        profileMedias.layoutManager = LinearLayoutManager(context)
-        profileMedias.adapter = MediasRecyclerAdapter(medias)
+        if (arguments?.get("User") != null) {
+            val member = Json.decodeFromString<Member>(arguments?.get("User") as String)
+            displayInformation(
+                member.url_profile,
+                member.surname,
+                member.age,
+                member.custom_status,
+                member.links,
+                member.first_name
+            )
+        } else {
+            displayInformation(
+                UserDAO.user!!.url_profile,
+                UserDAO.user!!.surname,
+                UserDAO.user!!.age,
+                UserDAO.user!!.custom_status,
+                UserDAO.user!!.links,
+                UserDAO.user!!.first_name
+            )
+        }
 
         return root
+    }
+
+    private fun displayInformation(
+        urlProfile: String,
+        surname: String,
+        age: Int,
+        customStatus: String,
+        links: Array<Link>,
+        firstName: String
+    ) {
+        Log.e("Url", urlProfile)
+
+        val profilePicture: ImageView = binding.profilePicture
+        val profileName: TextView = binding.profileName
+        val profileAge: TextView = binding.profileAge
+        val profileStatus: TextView = binding.profileStatus
+        val profileMedias: RecyclerView = binding.profileMedias
+        profileMedias.layoutManager = LinearLayoutManager(context)
+
+        Picasso.get()
+            .load(urlProfile)
+            .into(profilePicture)
+
+        profileName.text = getString(
+            R.string.display_name,
+            firstName.toUpperCase(Locale.ROOT),
+            surname
+        )
+
+        profileAge.text = getString(R.string.display_age, age)
+        profileStatus.text = customStatus
+        profileMedias.adapter = MediasRecyclerAdapter(links)
     }
 
     override fun onDestroyView() {
