@@ -1,8 +1,9 @@
 package com.example.nearyou.activity.fragment.home
 
+import android.content.Context
 import android.graphics.Color
+import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-//TODO vérifier si localisation est activée -> pas activé=erreur active la non d'une pipe en bois
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -38,37 +38,45 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        lateinit var listPerson: Array<Member>
+        //Check if geolocation active
+        val lm: LocationManager =
+            context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var gpsEnabled = false
+        try {
+            gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (ex: Exception) {
+        }
 
+        //Display members near user
+        val title: TextView = binding.title
+        if (gpsEnabled) {
+            CoroutineScope(Dispatchers.Main).launch {
+                val response = UserDAO.retrieveAllUserNearMe()
+                val listPerson: Array<Member> = UserDAO.retrieveAllUserNearMe().data
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val response = UserDAO.retrieveAllUserNearMe()
-            listPerson = UserDAO.retrieveAllUserNearMe().data
-            Log.e("test", response.toString())
-            val title: TextView = binding.title
-            when (response.code) {
-                ResponseCode.S_SUCCESS -> {
-
-                    if (listPerson.isNotEmpty()) {
-                        recyclerView = binding.recycler
-                        recyclerView.layoutManager = LinearLayoutManager(context)
-                        recyclerView.adapter = ListPersonRecyclerAdapter(listPerson)
-                        title.text = getString(R.string.title_list_person)
-                        title.setTextColor(Color.BLACK)
-                    } else {
+                when (response.code) {
+                    ResponseCode.S_SUCCESS -> {
+                        if (listPerson.isNotEmpty()) {
+                            recyclerView = binding.recycler
+                            recyclerView.layoutManager = LinearLayoutManager(context)
+                            recyclerView.adapter = ListPersonRecyclerAdapter(listPerson)
+                            title.text = getString(R.string.title_list_person)
+                            title.setTextColor(Color.BLACK)
+                        } else {
+                            title.text = getString(R.string.title_list_person_empty)
+                            title.setTextColor(Color.RED)
+                        }
+                    }
+                    else -> {
                         title.text = getString(R.string.title_list_person_empty)
                         title.setTextColor(Color.RED)
                     }
-
-                }
-                else -> {
-                    title.text = getString(R.string.title_list_person_empty)
-                    title.setTextColor(Color.RED)
                 }
             }
+        } else {
+            title.text = getString(R.string.location_needed)
+            title.setTextColor(Color.RED)
         }
-
-
         return root
     }
 

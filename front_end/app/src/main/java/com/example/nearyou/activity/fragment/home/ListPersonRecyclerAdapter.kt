@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearyou.R
+import com.example.nearyou.extension.format
 import com.example.nearyou.model.user.member.Member
 
 class ListPersonRecyclerAdapter(private val dataPerson: Array<Member>) :
@@ -31,7 +32,7 @@ class ListPersonRecyclerAdapter(private val dataPerson: Array<Member>) :
 
         viewHolder.name.text = "${person.first_name} ${person.surname.toUpperCase()}"
         viewHolder.age.text = "${person.age} ans"
-        viewHolder.distance.text = "${person.distance} km"
+        viewHolder.distance.text = "${person.distance.format(1)} km"
     }
 
     override fun getItemCount() = dataPerson.size
