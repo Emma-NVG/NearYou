@@ -19,7 +19,6 @@ import com.example.nearyou.databinding.ActivityMainBinding
 import com.example.nearyou.model.Permission
 import com.example.nearyou.model.user.UserDAO
 import com.example.nearyou.service.LocationBackgroundService
-import com.example.nearyou.service.RestarterLocationBackgroundService
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 
@@ -40,16 +39,21 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
+        navView.menu.findItem(R.id.nav_profile_logout).setOnMenuItemClickListener {
+            UserDAO.logout(this@MainActivity)
+            false
+        }
+
         appBarConfiguration = AppBarConfiguration(
-                setOf(
-                        R.id.nav_home,
-                        R.id.nav_scan_qr,
-                        R.id.nav_profile,
-                        R.id.nav_profile_edit,
-                        R.id.nav_profile_access,
-                        R.id.nav_settings
-                ),
-                drawerLayout
+            setOf(
+                R.id.nav_home,
+                R.id.nav_scan_qr,
+                R.id.nav_profile,
+                R.id.nav_profile_edit,
+                R.id.nav_profile_access,
+                R.id.nav_settings
+            ),
+            drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -65,21 +69,17 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (UserDAO.user == null) {
-            val loadingActivity = Intent(this@MainActivity, LoadingActivity::class.java)
-            startActivity(loadingActivity)
-        }
+        UserDAO.userStateListener.observe(this@MainActivity, {
+            if (it == null) {
+                stopService(Intent(this, LocationBackgroundService::class.java))
+
+                val intent = Intent(this, LoadingActivity::class.java)
+                this.startActivity(intent)
+                finishAffinity()
+            }
+        })
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
-    }
-
-    override fun onDestroy() {
-        val broadcastIntent = Intent()
-        broadcastIntent.action = "restartservice"
-        broadcastIntent.setClass(this, RestarterLocationBackgroundService::class.java)
-        this.sendBroadcast(broadcastIntent)
-
-        super.onDestroy()
     }
 
 
@@ -122,14 +122,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun tryStartLocationService() {
-        val locationBackgroundService = LocationBackgroundService()
         if (!LocationBackgroundService.isRunning) {
             val permissions = arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
             )
+
             if (Permission.isPermissionsAllowed(permissions, this)) {
-                val serviceIntent = Intent(this, locationBackgroundService.javaClass)
+                val serviceIntent = Intent(this, LocationBackgroundService::class.java)
                 startService(serviceIntent)
             } else {
                 if (Permission.shouldShowRequestPermissionRationale(permissions, this)) {
