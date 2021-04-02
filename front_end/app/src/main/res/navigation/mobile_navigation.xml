@@ -25,7 +25,11 @@
     <fragment
         android:id="@+id/nav_scan_qr"
         android:name="com.example.nearyou.activity.fragment.scanqr.ScanQRCodeFragment"
-        tools:layout="@layout/fragment_scan_qr" />
+        tools:layout="@layout/fragment_scan_qr" >
+        <action
+            android:id="@+id/action_nav_scan_qr_to_nav_profile"
+            app:destination="@id/nav_profile" />
+    </fragment>
     <fragment
         android:id="@+id/nav_profile_access"
         android:name="com.example.nearyou.activity.fragment.profile.access.ProfileAccessFragment"

@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
 import com.example.nearyou.R
 import com.example.nearyou.databinding.FragmentScanQrBinding
@@ -24,6 +25,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.json.JSONObject
 
 
@@ -105,8 +108,11 @@ class ScanQRCodeFragment : Fragment() {
 
                     when (result.code) {
                         ResponseCode.S_SUCCESS -> {
-                            // TODO
-                            // Go to profile fragment
+                            withContext(Dispatchers.Main) {
+                                val bundle = Bundle()
+                                bundle.putString("User", Json.encodeToString(result.data))
+                                findNavController().navigate(R.id.action_nav_scan_qr_to_nav_profile, bundle)
+                            }
                         }
                         ResponseCode.E_NO_RESOURCE -> {
                             Toast.makeText(context, R.string.no_user, Toast.LENGTH_LONG).show()
