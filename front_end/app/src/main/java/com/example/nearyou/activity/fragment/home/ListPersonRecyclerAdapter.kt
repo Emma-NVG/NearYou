@@ -31,8 +31,8 @@ class ListPersonRecyclerAdapter(private val dataPerson: Array<Member>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val person = dataPerson[position]
 
-        viewHolder.name.text = "${person.first_name} ${person.surname}"
-        viewHolder.age.text = person.age.toString()
+        viewHolder.name.text = "${person.first_name} ${person.surname.toUpperCase()}"
+        viewHolder.age.text = "${person.age} ans"
         viewHolder.distance.text = person.distance.toString()
         //viewHolder.imageProfile.setImageResource()
     }
