@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -17,6 +18,7 @@ import com.budiyev.android.codescanner.*
 import com.example.nearyou.R
 import com.example.nearyou.databinding.FragmentScanQrBinding
 import com.google.android.material.snackbar.Snackbar
+
 
 class ScanQRCodeFragment : Fragment() {
 
@@ -37,6 +39,8 @@ class ScanQRCodeFragment : Fragment() {
     ): View {
         _binding = FragmentScanQrBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        setHasOptionsMenu(true)
 
         return root
     }
@@ -136,6 +140,10 @@ class ScanQRCodeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.nav_scan_qr).isVisible = false
     }
 
     companion object {
