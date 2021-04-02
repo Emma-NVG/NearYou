@@ -16,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class ProfileAccessFragment : Fragment() {
 
@@ -40,7 +41,11 @@ class ProfileAccessFragment : Fragment() {
 
         if (UserDAO.user != null) {
             CoroutineScope(Dispatchers.IO).launch {
-                val bitmap = generateQRCode(UserDAO.user!!.token)
+                val rootObject= JSONObject()
+                rootObject.put("token", UserDAO.user!!.token)
+                rootObject.put("id", UserDAO.user!!.ID)
+
+                val bitmap = generateQRCode(rootObject.toString())
                 withContext(Dispatchers.Main) {
                     binding.qrCode.setImageBitmap(bitmap)
                 }

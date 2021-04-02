@@ -19,10 +19,10 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var listPerson = arrayOf(
-            Member(0, "", "martin", "leo", 21, "", 1, arrayOf(), 2.0, ""),
-            Member(1, "", "martine", "leo", 21, "", 1, arrayOf(), 2.0, ""),
-            Member(2, "", "martina", "leo", 21, "", 1, arrayOf(), 2.0, ""),
-            Member(3, "", "martin0", "leo", 21, "", 1, arrayOf(), 2.0, ""),
+            Member(0, "", "martin", "leo", 21, "", 1, arrayOf(), 2.0, "", ""),
+            Member(1, "", "martine", "leo", 21, "", 1, arrayOf(), 2.0, "", ""),
+            Member(2, "", "martina", "leo", 21, "", 1, arrayOf(), 2.0, "", ""),
+            Member(3, "", "martin0", "leo", 21, "", 1, arrayOf(), 2.0, "", ""),
     )
     lateinit var recyclerView: RecyclerView
 

@@ -13,7 +13,8 @@ data class Member(val ID: Int,
                   val is_public: Int,
                   val links: Array<Link>,
                   val distance: Double,
-                  val created_date: String) {
+                  val created_date: String,
+                  val edited_date: String) {
     companion object {
         val manager: MemberManager = MemberManager()
     }
