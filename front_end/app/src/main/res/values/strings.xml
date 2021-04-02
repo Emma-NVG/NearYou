@@ -30,5 +30,6 @@
     <string name="btn_connection">Connexion</string>
     <string name="btn_inscription">Inscription</string>
 
+    <string name="title_list_person">Ces personnes sont proches de vous !</string>
     <string name="location_needed">Nous avons besoin d\'avoir accès à votre position !</string>
 </resources>
