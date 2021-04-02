@@ -16,10 +16,15 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.nearyou.model.Permission
+import com.example.nearyou.model.location.Location
+import com.example.nearyou.model.user.UserDAO
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class LocationBackgroundService : Service() {
@@ -27,8 +32,8 @@ class LocationBackgroundService : Service() {
         var isRunning = false
             private set
 
-        private const val INTERVAL_LOCATION_REQUEST: Long = 60
-        private const val FASTEST_INTERVAL_LOCATION_REQUEST: Long = 30
+        private const val INTERVAL_LOCATION_REQUEST: Long = 3 * 60 * 1000
+        private const val FASTEST_INTERVAL_LOCATION_REQUEST: Long = 60 * 1000
     }
 
     override fun onCreate() {
@@ -77,7 +82,12 @@ class LocationBackgroundService : Service() {
 
             val mLocationCallback: LocationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
-                    // TODO : Send data in database
+                    if (UserDAO.user != null) {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            val androidLocation = locationResult.lastLocation
+                            UserDAO.addLocation(Location(androidLocation.latitude, androidLocation.longitude))
+                        }
+                    }
                 }
             }
 

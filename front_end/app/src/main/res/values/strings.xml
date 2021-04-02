@@ -31,4 +31,5 @@
     <string name="btn_inscription">Inscription</string>
 
     <string name="location_needed">Nous avons besoin d\'avoir accès à votre position !</string>
+    <string name="camera_needed">Nous avons besoin d\'avoir accès à votre caméra !</string>
 </resources>
