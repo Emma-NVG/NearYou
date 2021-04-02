@@ -1,6 +1,8 @@
 package com.example.nearyou.model.user
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.nearyou.model.credential.LoginCredential
 import com.example.nearyou.model.credential.SignCredential
 import com.example.nearyou.model.location.Location
@@ -9,10 +11,14 @@ import com.example.nearyou.model.user.member.Member
 
 object UserDAO {
     private val manager: UserManager = UserManager()
-    var user: User? = null
+
+    private val _user = MutableLiveData<User?>()
+    val user: User?
+        get() = _user.value
+    val userStateListener: LiveData<User?> = _user
 
     private fun saveUser(user: User?) {
-        UserDAO.user = user
+        _user.value = user
     }
 
     fun removeCredential(ctx: Context) {
@@ -45,14 +51,13 @@ object UserDAO {
     fun logout(ctx: Context) {
         removeCredential(ctx)
 
-        // TODO : stop location service before
-
-        user = null
+        _user.value = null
     }
 
     suspend fun login(loginCredential: LoginCredential): ResponseBody<User?> {
         val response = this.manager.login(loginCredential)
 
+        _user.value = user
         saveUser(response.data)
 
         return response
@@ -61,6 +66,7 @@ object UserDAO {
     suspend fun signUp(signCredential: SignCredential): ResponseBody<User?> {
         val response = this.manager.signup(signCredential)
 
+        _user.value = user
         saveUser(response.data)
 
         return response

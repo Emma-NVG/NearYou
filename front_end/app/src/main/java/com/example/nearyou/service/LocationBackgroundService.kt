@@ -103,10 +103,12 @@ class LocationBackgroundService : Service() {
 
         isRunning = false
 
-        val broadcastIntent = Intent()
-        broadcastIntent.action = "restartservice"
-        broadcastIntent.setClass(this, RestarterLocationBackgroundService::class.java)
-        this.sendBroadcast(broadcastIntent)
+        if (UserDAO.user != null) {
+            val broadcastIntent = Intent()
+            broadcastIntent.action = "restartservice"
+            broadcastIntent.setClass(this, RestarterLocationBackgroundService::class.java)
+            this.sendBroadcast(broadcastIntent)
+        }
     }
 
     @Nullable
