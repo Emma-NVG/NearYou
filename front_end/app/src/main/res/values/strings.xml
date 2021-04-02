@@ -34,4 +34,8 @@
     <string name="title_list_person_empty">Vous êtes seul au monde …</string>
     <string name="location_needed">Nous avons besoin d\'avoir accès à votre position !</string>
     <string name="camera_needed">Nous avons besoin d\'avoir accès à votre caméra !</string>
+
+    <string name="unknown_error">Une erreur inconnue est survenue ! veuillez réessayer plus tard !</string>
+    <string name="no_user">Aucuns utilisateurs correspondant aux données trouvées !</string>
+    <string name="invalid_data">Données invalides !</string>
 </resources>

@@ -18,15 +18,14 @@ class UserManager {
         val client = HttpClient(Android) { }
 
         return try {
-            val data: String =
-                client.post("https://www.nearyou.iut.apokalypt.fr/api/1.0/user/login") {
-                    body = FormDataContent(
+            val data: String = client.post("https://www.nearyou.iut.apokalypt.fr/api/1.0/user/login") {
+                body = FormDataContent(
                         Parameters.build {
                             append("email", credential.login)
                             append("password", credential.password)
                         }
-                    )
-                }
+                )
+            }
 
             Json.decodeFromString(data)
         } catch (e: ResponseException) {
@@ -43,13 +42,13 @@ class UserManager {
         return try {
             val data: String = client.post("https://www.nearyou.iut.apokalypt.fr/api/1.0/user") {
                 body = FormDataContent(
-                    Parameters.build {
-                        append("email", credential.email)
-                        append("password", credential.password)
-                        append("surname", credential.surname)
-                        append("first_name", credential.first_name)
-                        append("age", credential.age.toString())
-                    }
+                        Parameters.build {
+                            append("email", credential.email)
+                            append("password", credential.password)
+                            append("surname", credential.surname)
+                            append("first_name", credential.first_name)
+                            append("age", credential.age.toString())
+                        }
                 )
             }
 
@@ -66,8 +65,7 @@ class UserManager {
         val client = HttpClient(Android) { }
 
         return try {
-            val urlString =
-                "https://www.nearyou.iut.apokalypt.fr/api/1.0/user/${UserDAO.user!!.ID}/near"
+            val urlString = "https://www.nearyou.iut.apokalypt.fr/api/1.0/user/${UserDAO.user!!.ID}/near"
             val data: String = client.get(urlString) {
                 header("Authorization", "Bearer ${UserDAO.user!!.token}")
             }
