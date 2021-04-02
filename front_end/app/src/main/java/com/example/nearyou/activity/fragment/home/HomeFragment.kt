@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.nearyou.R
 import com.example.nearyou.databinding.FragmentHomeBinding
 import com.example.nearyou.model.response.ResponseCode
@@ -27,7 +26,6 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +47,7 @@ class HomeFragment : Fragment() {
 
         //Display members near user
         val title: TextView = binding.title
+        val recyclerView = binding.recycler
         if (gpsEnabled) {
             CoroutineScope(Dispatchers.Main).launch {
                 val response = UserDAO.retrieveAllUserNearMe()
@@ -57,25 +56,32 @@ class HomeFragment : Fragment() {
                 when (response.code) {
                     ResponseCode.S_SUCCESS -> {
                         if (listPerson.isNotEmpty()) {
-                            recyclerView = binding.recycler
                             recyclerView.layoutManager = LinearLayoutManager(context)
                             recyclerView.adapter = ListPersonRecyclerAdapter(listPerson)
+                            recyclerView.visibility = View.VISIBLE
+
                             title.text = getString(R.string.title_list_person)
                             title.setTextColor(Color.BLACK)
                         } else {
                             title.text = getString(R.string.title_list_person_empty)
                             title.setTextColor(Color.RED)
+
+                            recyclerView.visibility = View.GONE
                         }
                     }
                     else -> {
                         title.text = getString(R.string.title_list_person_empty)
                         title.setTextColor(Color.RED)
+
+                        recyclerView.visibility = View.GONE
                     }
                 }
             }
         } else {
             title.text = getString(R.string.location_needed)
             title.setTextColor(Color.RED)
+
+            recyclerView.visibility = View.GONE
         }
         return root
     }
