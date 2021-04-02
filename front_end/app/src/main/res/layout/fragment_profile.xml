@@ -10,7 +10,7 @@
         android:id="@+id/profile_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_logo"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toTopOf="@+id/profile_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -24,20 +24,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/profile_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/profile_status"
+        app:layout_constraintStart_toStartOf="@id/profile_status"
         app:layout_constraintTop_toBottomOf="@+id/profile_picture">
 
         <TextView
             android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
             android:text="TextView"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/profile_separator"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,8 @@
             android:id="@+id/profile_separator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/edittext_rounded"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/separator_point"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/profile_age"
             app:layout_constraintHorizontal_bias="0.5"
@@ -54,10 +55,10 @@
 
         <TextView
             android:id="@+id/profile_age"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="100dp"
             android:text="TextView"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -80,13 +81,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/profile_medias"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_status"/>
+        app:layout_constraintTop_toBottomOf="@+id/profile_status" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
