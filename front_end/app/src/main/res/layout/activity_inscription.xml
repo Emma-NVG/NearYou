@@ -13,7 +13,7 @@
       android:layout_height="174dp"
       android:layout_marginTop="32dp"
       android:contentDescription="@string/logo_img"
-      android:src="@mipmap/ic_logo_foreground"
+      android:src="@mipmap/ic_launcher_foreground"
       app:layout_constraintBottom_toTopOf="@+id/container_input"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
