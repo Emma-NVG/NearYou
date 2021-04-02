@@ -12,6 +12,10 @@ import com.example.nearyou.model.user.UserDAO
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProfileAccessFragment : Fragment() {
 
@@ -35,8 +39,12 @@ class ProfileAccessFragment : Fragment() {
         super.onResume()
 
         if (UserDAO.user != null) {
-            val bitmap = generateQRCode(UserDAO.user!!.token)
-            binding.qrCode.setImageBitmap(bitmap)
+            CoroutineScope(Dispatchers.IO).launch {
+                val bitmap = generateQRCode(UserDAO.user!!.token)
+                withContext(Dispatchers.Main) {
+                    binding.qrCode.setImageBitmap(bitmap)
+                }
+            }
         }
     }
 
