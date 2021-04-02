@@ -31,9 +31,9 @@ class ScanQRCodeFragment : Fragment() {
     private var snackbarCameraPermission: Snackbar? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentScanQrBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -49,9 +49,16 @@ class ScanQRCodeFragment : Fragment() {
 
     private fun tryStartScanning() {
         if (context != null && activity != null) {
-            if (checkSelfPermission(context as Context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+            if (checkSelfPermission(
+                    context as Context,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                    requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_PERMISSION_CAMERA)
+                    requestPermissions(
+                        arrayOf(Manifest.permission.CAMERA),
+                        REQUEST_PERMISSION_CAMERA
+                    )
                 } else {
                     showSnackbar()
                 }
@@ -64,13 +71,13 @@ class ScanQRCodeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if(::codeScanner.isInitialized) {
+        if (::codeScanner.isInitialized) {
             codeScanner.startPreview()
         }
     }
 
     override fun onPause() {
-        if(::codeScanner.isInitialized) {
+        if (::codeScanner.isInitialized) {
             codeScanner.releaseResources()
         }
         super.onPause()
@@ -93,7 +100,8 @@ class ScanQRCodeFragment : Fragment() {
             Toast.makeText(context, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
-            Toast.makeText(context, "Camera initialization error: ${it.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Camera initialization error: ${it.message}", Toast.LENGTH_LONG)
+                .show()
         }
 
         scannerView.setOnClickListener {
@@ -101,7 +109,11 @@ class ScanQRCodeFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {

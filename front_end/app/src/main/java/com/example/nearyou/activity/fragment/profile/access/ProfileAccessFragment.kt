@@ -23,9 +23,9 @@ class ProfileAccessFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileAccessBinding.inflate(inflater, container, false)
 
@@ -69,7 +69,8 @@ class ProfileAccessFragment : Fragment() {
                     bitmap.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
                 }
             }
-        } catch (e: WriterException) { }
+        } catch (e: WriterException) {
+        }
         return bitmap
     }
 }

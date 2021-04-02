@@ -31,6 +31,7 @@
     <string name="btn_inscription">Inscription</string>
 
     <string name="title_list_person">Ces personnes sont proches de vous !</string>
+    <string name="title_list_person_empty">Vous êtes seul au monde …</string>
     <string name="location_needed">Nous avons besoin d\'avoir accès à votre position !</string>
     <string name="camera_needed">Nous avons besoin d\'avoir accès à votre caméra !</string>
 </resources>

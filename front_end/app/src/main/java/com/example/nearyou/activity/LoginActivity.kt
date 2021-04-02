@@ -29,7 +29,8 @@ class LoginActivity : Activity() {
 
         btnC.setOnClickListener {
             if (isEmailValid(inputMail.text.toString())) {
-                val credentials = LoginCredential(inputMail.text.toString(), inputPassword.text.toString())
+                val credentials =
+                    LoginCredential(inputMail.text.toString(), inputPassword.text.toString())
 
                 CoroutineScope(Dispatchers.Main).launch {
                     val response = UserDAO.login(credentials)
@@ -61,7 +62,6 @@ class LoginActivity : Activity() {
             startActivity(inscriptionActivity)
         }
     }
-
 
 
     override fun onResume() {

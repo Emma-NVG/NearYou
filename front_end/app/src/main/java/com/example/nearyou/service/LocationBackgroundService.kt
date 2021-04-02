@@ -49,18 +49,22 @@ class LocationBackgroundService : Service() {
     private fun startMyOwnForeground() {
         val NOTIFICATION_CHANNEL_ID = "example.permanence"
         val channelName = "Background Service"
-        val chan = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE)
+        val chan = NotificationChannel(
+            NOTIFICATION_CHANNEL_ID,
+            channelName,
+            NotificationManager.IMPORTANCE_NONE
+        )
         chan.lightColor = Color.BLUE
         chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         val manager =
-                (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)!!
+            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)!!
         manager.createNotificationChannel(chan)
         val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
         val notification: Notification = notificationBuilder.setOngoing(true)
-                .setContentTitle("App is running in background")
-                .setPriority(NotificationManager.IMPORTANCE_NONE)
-                .setCategory(Notification.CATEGORY_SERVICE)
-                .build()
+            .setContentTitle("App is running in background")
+            .setPriority(NotificationManager.IMPORTANCE_NONE)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .build()
         startForeground(2, notification)
     }
 
@@ -69,9 +73,12 @@ class LocationBackgroundService : Service() {
         super.onStartCommand(intent, flags, startId)
 
         if (Permission.isPermissionsAllowed(
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
-                        this
-                )
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                this
+            )
         ) {
             isRunning = true
 
@@ -85,14 +92,19 @@ class LocationBackgroundService : Service() {
                     if (UserDAO.user != null) {
                         CoroutineScope(Dispatchers.Main).launch {
                             val androidLocation = locationResult.lastLocation
-                            UserDAO.addLocation(Location(androidLocation.latitude, androidLocation.longitude))
+                            UserDAO.addLocation(
+                                Location(
+                                    androidLocation.latitude,
+                                    androidLocation.longitude
+                                )
+                            )
                         }
                     }
                 }
             }
 
             LocationServices.getFusedLocationProviderClient(this)
-                    .requestLocationUpdates(locationRequest, mLocationCallback, Looper.getMainLooper())
+                .requestLocationUpdates(locationRequest, mLocationCallback, Looper.getMainLooper())
         }
 
         return START_STICKY

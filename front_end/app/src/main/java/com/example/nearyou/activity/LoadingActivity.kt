@@ -37,11 +37,17 @@ class LoadingActivity : Activity() {
                         val response = UserDAO.login(credential)
                         when (response.code) {
                             ResponseCode.S_SUCCESS -> {
-                                startActivity(Intent(this@LoadingActivity, MainActivity::class.java))
+                                startActivity(
+                                    Intent(
+                                        this@LoadingActivity,
+                                        MainActivity::class.java
+                                    )
+                                )
                             }
                             else -> {
                                 UserDAO.removeCredential(this@LoadingActivity)
-                                val loginActivity = Intent(this@LoadingActivity, LoginActivity::class.java)
+                                val loginActivity =
+                                    Intent(this@LoadingActivity, LoginActivity::class.java)
                                 startActivity(loginActivity)
                             }
                         }

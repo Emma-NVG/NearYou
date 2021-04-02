@@ -49,12 +49,26 @@ class InscriptionActivity : Activity() {
                     if (isEmailValid(inputMail.text.toString())) {
                         if (inputPassword.text.toString() == inputPasswordC.text.toString()) {
                             CoroutineScope(Dispatchers.Main).launch {
-                                val signCredentials = SignCredential(inputMail.text.toString(), inputPassword.text.toString(), inputName.text.toString(), inputFirstname.text.toString(), parseInt(inputAge.text.toString()))
+                                val signCredentials = SignCredential(
+                                    inputMail.text.toString(),
+                                    inputPassword.text.toString(),
+                                    inputName.text.toString(),
+                                    inputFirstname.text.toString(),
+                                    parseInt(inputAge.text.toString())
+                                )
                                 val response = UserDAO.signUp(signCredentials)
                                 when (response.code) {
                                     ResponseCode.S_SUCCESS -> {
-                                        UserDAO.saveCredentialCache(signCredentials, applicationContext)
-                                        startActivity(Intent(this@InscriptionActivity, MainActivity::class.java))
+                                        UserDAO.saveCredentialCache(
+                                            signCredentials,
+                                            applicationContext
+                                        )
+                                        startActivity(
+                                            Intent(
+                                                this@InscriptionActivity,
+                                                MainActivity::class.java
+                                            )
+                                        )
                                     }
                                     ResponseCode.E_AGE_TOO_YOUNG -> {
                                         inputAge.error = "Vous êtes trop jeune !"

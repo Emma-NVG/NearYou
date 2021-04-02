@@ -27,6 +27,7 @@ object UserDAO {
         sharedEditor.remove("login")
         sharedEditor.apply()
     }
+
     fun getCredential(ctx: Context): LoginCredential? {
         val shared = ctx.getSharedPreferences("Credential", Context.MODE_PRIVATE)
 
@@ -38,12 +39,14 @@ object UserDAO {
             null
         }
     }
+
     fun saveCredentialCache(credential: LoginCredential, ctx: Context) {
         val sharedEditor = ctx.getSharedPreferences("Credential", Context.MODE_PRIVATE).edit()
         sharedEditor.putString("login", credential.login)
         sharedEditor.putString("password", credential.password)
         sharedEditor.apply()
     }
+
     fun saveCredentialCache(credential: SignCredential, ctx: Context) {
         this.saveCredentialCache(LoginCredential(credential.email, credential.password), ctx)
     }
@@ -72,6 +75,9 @@ object UserDAO {
         return response
     }
 
-    suspend fun addLocation(location: Location): ResponseBody<Location?> = Location.manager.addLocation(location)
-    suspend fun retrieveAllUserNearMe(): ResponseBody<Array<Member>> = this.manager.retrieveAllUserNearMe()
+    suspend fun addLocation(location: Location): ResponseBody<Location?> =
+        Location.manager.addLocation(location)
+
+    suspend fun retrieveAllUserNearMe(): ResponseBody<Array<Member>> =
+        this.manager.retrieveAllUserNearMe()
 }

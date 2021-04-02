@@ -18,15 +18,16 @@ class LocationManager {
         val client = HttpClient(Android) { }
 
         return try {
-            val urlString = "https://www.nearyou.iut.apokalypt.fr/api/1.0/user/${UserDAO.user!!.ID}/location"
+            val urlString =
+                "https://www.nearyou.iut.apokalypt.fr/api/1.0/user/${UserDAO.user!!.ID}/location"
             val data: String = client.post(urlString) {
                 header("Authorization", "Bearer ${UserDAO.user!!.token}")
 
                 body = FormDataContent(
-                        Parameters.build {
-                            append("latitude", location.latitude.toString())
-                            append("longitude", location.longitude.toString())
-                        }
+                    Parameters.build {
+                        append("latitude", location.latitude.toString())
+                        append("longitude", location.longitude.toString())
+                    }
                 )
             }
 

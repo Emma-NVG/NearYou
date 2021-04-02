@@ -9,7 +9,7 @@ import com.example.nearyou.R
 import com.example.nearyou.model.user.member.Member
 
 class ListPersonRecyclerAdapter(private val dataPerson: Array<Member>) :
-        RecyclerView.Adapter<ListPersonRecyclerAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ListPersonRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.name)

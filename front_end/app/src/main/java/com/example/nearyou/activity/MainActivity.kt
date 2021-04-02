@@ -103,7 +103,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
@@ -135,7 +139,11 @@ class MainActivity : AppCompatActivity() {
                 if (Permission.shouldShowRequestPermissionRationale(permissions, this)) {
                     showSnackBar()
                 } else {
-                    ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSION_LOCATION)
+                    ActivityCompat.requestPermissions(
+                        this,
+                        permissions,
+                        REQUEST_PERMISSION_LOCATION
+                    )
                 }
             }
         }
@@ -143,15 +151,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSnackBar() {
         Snackbar.make(binding.root, R.string.location_needed, Snackbar.LENGTH_SHORT)
-                .setAction(R.string.menu_settings) {
-                    val uri = Uri.fromParts("package", packageName, null)
+            .setAction(R.string.menu_settings) {
+                val uri = Uri.fromParts("package", packageName, null)
 
-                    val intent = Intent()
-                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                    intent.data = uri
-                    startActivityForResult(intent, REQUEST_PERMISSION_LOCATION_SETTINGS)
-                }
-                .show()
+                val intent = Intent()
+                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                intent.data = uri
+                startActivityForResult(intent, REQUEST_PERMISSION_LOCATION_SETTINGS)
+            }
+            .show()
     }
 
     companion object {
