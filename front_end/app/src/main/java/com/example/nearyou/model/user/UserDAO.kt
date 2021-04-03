@@ -82,6 +82,13 @@ object UserDAO {
     suspend fun retrieveAllUserNearMe(): ResponseBody<Array<Member>> =
         this.manager.retrieveAllUserNearMe()
 
-    suspend fun updateUserData(surname: String, first_name: String, age: Int, custom_status: String, is_public: Boolean, links: Array<Link>): ResponseBody<User?> =
-        this.manager.updateUserData(surname, first_name, age, custom_status, is_public, links)
+    suspend fun updateUserData(surname: String, first_name: String, age: Int, custom_status: String, is_public: Boolean, links: Array<Link>): ResponseBody<User?> {
+        val response = this.manager.updateUserData(surname, first_name, age, custom_status, is_public, links)
+
+        if (response.data != null) {
+            this._user.value = response.data
+        }
+
+        return response
+    }
 }

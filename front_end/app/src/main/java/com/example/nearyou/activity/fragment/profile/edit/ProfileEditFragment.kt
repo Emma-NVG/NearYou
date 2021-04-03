@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nearyou.R
 import com.example.nearyou.databinding.FragmentProfileEditBinding
 import com.example.nearyou.model.Link
+import com.example.nearyou.model.response.ResponseCode
 import com.example.nearyou.model.user.UserDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -66,13 +70,26 @@ class ProfileEditFragment : Fragment() {
             if (listEmptyInput.isEmpty()) {
                 if (parseInt(age.text.toString()) < 130) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        UserDAO.user?.age = parseInt(age.text.toString())
-                        UserDAO.user?.surname = name.text.toString()
-                        UserDAO.user?.first_name = firstName.text.toString()
-                        UserDAO.user?.custom_status = status.text.toString()
-                        // UserDAO.user?.links = adapter.getItems()
+                        val result = UserDAO.updateUserData(
+                            name.text.toString(),
+                            firstName.text.toString(),
+                            parseInt(age.text.toString()),
+                            status.text.toString(),
+                            true,
+                            mutableListLink.filter { it.link.isNotBlank() }.toTypedArray()
+                        )
 
-                        //TODO put modifications in database
+                        when (result.code) {
+                            ResponseCode.S_SUCCESS -> {
+                                Toast.makeText(context, R.string.user_data_updated, Toast.LENGTH_SHORT).show()
+                                findNavController().navigate(R.id.action_nav_profile_edit_to_nav_profile)
+                            }
+                            ResponseCode.E_UNAUTHORIZED -> {
+                                Toast.makeText(context, R.string.user_data_unhautorized, Toast.LENGTH_SHORT).show()
+                                findNavController().navigate(R.id.action_nav_profile_edit_to_nav_profile)
+                            }
+                            else -> Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 } else {
                     age.error = "Vous êtes trop vieux"

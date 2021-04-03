@@ -21,7 +21,11 @@
     <fragment
         android:id="@+id/nav_profile_edit"
         android:name="com.example.nearyou.activity.fragment.profile.edit.ProfileEditFragment"
-        tools:layout="@layout/fragment_profile_edit" />
+        tools:layout="@layout/fragment_profile_edit" >
+        <action
+            android:id="@+id/action_nav_profile_edit_to_nav_profile"
+            app:destination="@id/nav_profile" />
+    </fragment>
     <fragment
         android:id="@+id/nav_scan_qr"
         android:name="com.example.nearyou.activity.fragment.scanqr.ScanQRCodeFragment"
