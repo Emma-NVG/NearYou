@@ -3,6 +3,7 @@ package com.example.nearyou.model.user
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.nearyou.model.Link
 import com.example.nearyou.model.credential.LoginCredential
 import com.example.nearyou.model.credential.SignCredential
 import com.example.nearyou.model.location.Location
@@ -80,4 +81,7 @@ object UserDAO {
 
     suspend fun retrieveAllUserNearMe(): ResponseBody<Array<Member>> =
         this.manager.retrieveAllUserNearMe()
+
+    suspend fun updateUserData(surname: String, first_name: String, age: Int, custom_status: String, is_public: Boolean, links: Array<Link>): ResponseBody<User?> =
+        this.manager.updateUserData(surname, first_name, age, custom_status, is_public, links)
 }
