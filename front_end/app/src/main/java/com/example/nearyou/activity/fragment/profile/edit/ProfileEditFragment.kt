@@ -33,39 +33,32 @@ class ProfileEditFragment : Fragment() {
 
         val age: EditText = binding.age
         val name: EditText = binding.name
-        val firstname: EditText = binding.firstname
+        val firstName: EditText = binding.firstname
         val status: EditText = binding.status
         val addBtn: Button = binding.addBtn
         val saveBtn: Button = binding.saveBtn
 
         age.setText(UserDAO.user?.age.toString())
         name.setText(UserDAO.user?.surname.toString())
-        firstname.setText(UserDAO.user?.first_name.toString())
+        firstName.setText(UserDAO.user?.first_name.toString())
         status.setText(UserDAO.user?.custom_status.toString())
 
-        val listLink: Array<Link> = UserDAO.user?.links!!
+        val mutableListLink: MutableList<Link> = UserDAO.user?.links!!.toMutableList()
         val recyclerView = binding.listLink
 
-        var adapter = LinkListRecyclerAdapter(listLink, requireContext())
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = LinkListRecyclerAdapter(mutableListLink, requireContext())
 
-//        val list: ArrayList<Link> = listLink.toList() as ArrayList<Link>
-//
-//        addBtn.setOnClickListener {
-//            var link: Link = Link(listLink.size, "","","")
-//            Log.e("avant", list.size.toString())
-//            list.add(link)
-//            Log.e("après", list.size.toString())
-//           adapter = LinkListRecyclerAdapter(listLink, requireContext())
-//           recyclerView.adapter = adapter
-//        }
+        addBtn.setOnClickListener {
+            mutableListLink.add(Link(mutableListLink.size, "","",""))
+            recyclerView.adapter!!.notifyDataSetChanged()
+        }
 
         saveBtn.setOnClickListener {
             val list = arrayOf(
                 age,
                 name,
-                firstname,
+                firstName,
                 status,
             )
             val listEmptyInput = list.filter { it.text.isEmpty() }
@@ -75,9 +68,10 @@ class ProfileEditFragment : Fragment() {
                     CoroutineScope(Dispatchers.Main).launch {
                         UserDAO.user?.age = parseInt(age.text.toString())
                         UserDAO.user?.surname = name.text.toString()
-                        UserDAO.user?.first_name = firstname.text.toString()
+                        UserDAO.user?.first_name = firstName.text.toString()
                         UserDAO.user?.custom_status = status.text.toString()
-                        UserDAO.user?.links = adapter.getItems()
+                        // UserDAO.user?.links = adapter.getItems()
+
                         //TODO put modifications in database
                     }
                 } else {
