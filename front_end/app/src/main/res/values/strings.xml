@@ -70,4 +70,6 @@
     <string name="force_logout">You have been logged out because your credentials must have benn changed…</string>
     <string name="user_data_updated">Modifications saved !</string>
     <string name="user_data_unhautorized">You are not allowed to modify this profile !</string>
+
+    <string name="account_visibility">Public profile ?</string>
 </resources>
