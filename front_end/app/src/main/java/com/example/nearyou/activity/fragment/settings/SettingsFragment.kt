@@ -1,6 +1,5 @@
 package com.example.nearyou.activity.fragment.settings
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
@@ -13,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.nearyou.R
-import com.example.nearyou.activity.MainActivity
 import com.example.nearyou.databinding.FragmentSettingsBinding
 import com.example.nearyou.model.database.DatabaseHandler
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -52,9 +50,7 @@ class SettingsFragment : Fragment() {
                         DatabaseHandler(requireContext()).changeConf("theme", "black")
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-                        val intent = Intent(context, MainActivity::class.java)
-                        startActivity(intent)
-                        activity?.finish()
+                        findNavController().navigate(R.id.action_nav_settings_self)
                     }
                 }
 
@@ -63,9 +59,7 @@ class SettingsFragment : Fragment() {
                         DatabaseHandler(requireContext()).changeConf("theme", "light")
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-                        val intent = Intent(context, MainActivity::class.java)
-                        startActivity(intent)
-                        activity?.finish()
+                        findNavController().navigate(R.id.action_nav_settings_self)
                     }
                 }
 

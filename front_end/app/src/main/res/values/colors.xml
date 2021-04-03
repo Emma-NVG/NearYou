@@ -2,14 +2,16 @@
 <resources>
     <color name="purple_700">#FF3700B3</color>
 
+    <color name="lighter_orange">#FFC000</color>
+
     <color name="black">#171717</color>
     <color name="dark">#27282c</color>
     <color name="dark_gray">#424242</color>
     <color name="gray">#E4E3E3</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="btn_blue">#0692FF</color>
-    <color name="btn_orange">#FF9800</color>
+    <color name="lighter_blue">#0692FF</color>
+    <color name="darker_orange">#FF9800</color>
 
     <color name="error">#A10C0C</color>
 </resources>

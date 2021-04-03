@@ -6,9 +6,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -17,10 +19,15 @@ import androidx.navigation.ui.*
 import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityMainBinding
 import com.example.nearyou.model.Permission
+import com.example.nearyou.model.response.ResponseCode
 import com.example.nearyou.model.user.UserDAO
 import com.example.nearyou.service.LocationBackgroundService
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -64,6 +71,34 @@ class MainActivity : AppCompatActivity() {
         }
 
         tryStartLocationService()
+        refreshUserDataEachMinute()
+    }
+
+    fun refreshUserDataEachMinute() {
+        Timer().scheduleAtFixedRate(
+            object : TimerTask() {
+                override fun run() {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val credentials = UserDAO.getCacheCredential(applicationContext)
+
+                        if (credentials != null) {
+                            val result = UserDAO.login(credentials)
+                            Log.e("Result", result.toString())
+                            if (result.code == ResponseCode.E_WRONG_CREDENTIALS) {
+                                UserDAO.logout(applicationContext)
+                                UserDAO.removeCredential(this@MainActivity)
+                                Toast.makeText(this@MainActivity, R.string.force_logout, Toast.LENGTH_LONG).show()
+                            }
+                        } else {
+                            UserDAO.logout(applicationContext)
+                            UserDAO.removeCredential(this@MainActivity)
+                            Toast.makeText(this@MainActivity, R.string.force_logout, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+
+            },1000 * 60, 1000 * 60
+        )
     }
 
     override fun onResume() {

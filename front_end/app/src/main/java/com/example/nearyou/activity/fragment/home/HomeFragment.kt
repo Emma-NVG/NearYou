@@ -47,6 +47,10 @@ class HomeFragment : Fragment() {
         } catch (ex: Exception) {
         }
 
+        binding.reload.setOnClickListener {
+            retrieveUserNearMe()
+        }
+
         //Display members near user
         val title: TextView = binding.title
         val recyclerView = binding.recycler
@@ -58,44 +62,7 @@ class HomeFragment : Fragment() {
                 requireContext()
             )
         ) {
-            CoroutineScope(Dispatchers.Main).launch {
-                val response = UserDAO.retrieveAllUserNearMe()
-                val listPerson: Array<Member> = UserDAO.retrieveAllUserNearMe().data
-
-                when (response.code) {
-                    ResponseCode.S_SUCCESS -> {
-                        if (listPerson.isNotEmpty()) {
-                            recyclerView.layoutManager = LinearLayoutManager(context)
-                            recyclerView.adapter = ListPersonRecyclerAdapter(
-                                listPerson,
-                                findNavController(),
-                                requireContext()
-                            )
-                            recyclerView.visibility = View.VISIBLE
-
-                            title.text = getString(R.string.title_list_person)
-                            title.setTextColor(Color.BLACK)
-                        } else {
-                            title.text = getString(R.string.title_list_person_empty)
-                            title.setTextColor(Color.RED)
-
-                            recyclerView.visibility = View.GONE
-                        }
-                    }
-                    ResponseCode.E_NO_INTERNET -> {
-                        title.text = getString(R.string.no_internet)
-                        title.setTextColor(Color.RED)
-
-                        recyclerView.visibility = View.GONE
-                    }
-                    else -> {
-                        title.text = getString(R.string.unknown_error)
-                        title.setTextColor(Color.RED)
-
-                        recyclerView.visibility = View.GONE
-                    }
-                }
-            }
+            retrieveUserNearMe()
         } else {
             if (gpsEnabled) {
                 // Permission isn't allowed
@@ -111,6 +78,54 @@ class HomeFragment : Fragment() {
             }
         }
         return root
+    }
+
+    private fun retrieveUserNearMe() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val title: TextView = binding.title
+            val recyclerView = binding.recycler
+
+            title.visibility = View.GONE
+            recyclerView.visibility = View.GONE
+
+            val response = UserDAO.retrieveAllUserNearMe()
+            val listPerson: Array<Member> = UserDAO.retrieveAllUserNearMe().data
+
+            title.visibility = View.VISIBLE
+            when (response.code) {
+                ResponseCode.S_SUCCESS -> {
+                    if (listPerson.isNotEmpty()) {
+                        recyclerView.layoutManager = LinearLayoutManager(context)
+                        recyclerView.adapter = ListPersonRecyclerAdapter(
+                            listPerson,
+                            findNavController(),
+                            requireContext()
+                        )
+                        recyclerView.visibility = View.VISIBLE
+
+                        title.text = getString(R.string.title_list_person)
+                        title.setTextColor(Color.BLACK)
+                    } else {
+                        title.text = getString(R.string.title_list_person_empty)
+                        title.setTextColor(Color.RED)
+
+                        recyclerView.visibility = View.GONE
+                    }
+                }
+                ResponseCode.E_NO_INTERNET -> {
+                    title.text = getString(R.string.no_internet)
+                    title.setTextColor(Color.RED)
+
+                    recyclerView.visibility = View.GONE
+                }
+                else -> {
+                    title.text = getString(R.string.unknown_error)
+                    title.setTextColor(Color.RED)
+
+                    recyclerView.visibility = View.GONE
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

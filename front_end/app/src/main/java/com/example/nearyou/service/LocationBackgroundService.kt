@@ -2,19 +2,17 @@ package com.example.nearyou.service
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import android.os.Looper
 import androidx.annotation.Nullable
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.example.nearyou.R
 import com.example.nearyou.model.Permission
 import com.example.nearyou.model.location.Location
 import com.example.nearyou.model.user.UserDAO
@@ -28,9 +26,13 @@ import kotlinx.coroutines.launch
 
 
 class LocationBackgroundService : Service() {
+    private lateinit var notificationManager: NotificationManager
+
     companion object {
         var isRunning = false
             private set
+
+        private const val NOTIFICATION_CHANNEL_ID = "com.example.nearyou.service.location"
 
         private const val INTERVAL_LOCATION_REQUEST: Long = 3 * 60 * 1000
         private const val FASTEST_INTERVAL_LOCATION_REQUEST: Long = 60 * 1000
@@ -39,32 +41,45 @@ class LocationBackgroundService : Service() {
     override fun onCreate() {
         super.onCreate()
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
-            startMyOwnForeground()
-        else
-            startForeground(2, Notification())
+        // Initialize the notification manager
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        startService()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun startMyOwnForeground() {
-        val NOTIFICATION_CHANNEL_ID = "example.permanence"
-        val channelName = "Background Service"
-        val chan = NotificationChannel(
-            NOTIFICATION_CHANNEL_ID,
-            channelName,
-            NotificationManager.IMPORTANCE_NONE
-        )
-        chan.lightColor = Color.BLUE
-        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-        val manager =
-            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)!!
-        manager.createNotificationChannel(chan)
-        val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-        val notification: Notification = notificationBuilder.setOngoing(true)
-            .setContentTitle("App is running in background")
-            .setPriority(NotificationManager.IMPORTANCE_NONE)
-            .setCategory(Notification.CATEGORY_SERVICE)
+    private fun startService() {
+        // 0. Get data
+        val mainNotificationText = getString(R.string.notification_location)
+        val titleText = "NearYou"
+
+        // 1. Create Notification Channel for O+ and beyond devices (26+).
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            val notificationChannel = NotificationChannel(
+                NOTIFICATION_CHANNEL_ID, titleText, NotificationManager.IMPORTANCE_NONE)
+
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+
+        // 2. Build the BIG_TEXT_STYLE.
+        val bigTextStyle = NotificationCompat.BigTextStyle()
+            .bigText(mainNotificationText)
+            .setBigContentTitle(titleText)
+
+        // 3. Build and issue the notification.
+        // Notification Channel Id is ignored for Android pre O (26).
+        val notificationCompatBuilder = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
+
+        val notification = notificationCompatBuilder
+            .setStyle(bigTextStyle)
+            .setContentTitle(titleText)
+            .setContentText(mainNotificationText)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setVibrate(longArrayOf(0L))
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .addAction(R.drawable.ic_menu_logout, "Stop", null)
             .build()
+
         startForeground(2, notification)
     }
 
