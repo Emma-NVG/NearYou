@@ -7,7 +7,7 @@
     <string name="ic_menu_open">Close menu</string>
 
     <string name="menu_home">Accueil</string>
-    <string name="menu_account">Account</string>
+    <string name="menu_account">Mon compte</string>
     <string name="menu_profile">Profil</string>
     <string name="menu_profile_access">Générer QR Code d\'accès</string>
     <string name="menu_profile_edit">Modifier profil</string>
