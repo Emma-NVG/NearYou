@@ -81,7 +81,7 @@ class ProfileFragment : Fragment() {
 
         profileAge.text = getString(R.string.display_age, age)
         profileStatus.text = customStatus
-        profileMedias.adapter = MediasRecyclerAdapter(links)
+        profileMedias.adapter = MediasRecyclerAdapter(links, requireContext())
     }
 
     override fun onDestroyView() {
