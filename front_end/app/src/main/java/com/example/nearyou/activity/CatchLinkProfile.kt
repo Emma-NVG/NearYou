@@ -1,9 +1,13 @@
 package com.example.nearyou.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nearyou.R
 import com.example.nearyou.activity.fragment.profile.ProfileFragment
 import com.example.nearyou.databinding.ActivityCatchLinkProfileBinding
 import com.example.nearyou.model.response.ResponseCode
@@ -23,12 +27,14 @@ class CatchLinkProfile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Remove notification bar
-        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        this.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         binding = ActivityCatchLinkProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.hide()
 
         val appLinkIntent = intent
         val appLinkData = appLinkIntent.data
@@ -62,5 +68,26 @@ class CatchLinkProfile : AppCompatActivity() {
 
 
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.catch_url_profile, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_home -> {
+                if (isTaskRoot) {
+                    startActivity(Intent(this@CatchLinkProfile, LoadingActivity::class.java))
+                } else {
+                    onBackPressed()
+                }
+            }
+            else -> {
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
