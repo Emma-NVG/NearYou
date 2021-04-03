@@ -58,7 +58,11 @@ class HomeFragment : Fragment() {
                     ResponseCode.S_SUCCESS -> {
                         if (listPerson.isNotEmpty()) {
                             recyclerView.layoutManager = LinearLayoutManager(context)
-                            recyclerView.adapter = ListPersonRecyclerAdapter(listPerson, findNavController(), context!!)
+                            recyclerView.adapter = ListPersonRecyclerAdapter(
+                                listPerson,
+                                findNavController(),
+                                requireContext()
+                            )
                             recyclerView.visibility = View.VISIBLE
 
                             title.text = getString(R.string.title_list_person)
