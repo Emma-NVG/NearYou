@@ -62,7 +62,7 @@ class LoginActivity : Activity() {
         }
 
         btnI.setOnClickListener {
-            val inscriptionActivity = Intent(this@LoginActivity, InscriptionActivity::class.java)
+            val inscriptionActivity = Intent(this@LoginActivity, RegistrationActivity::class.java)
             startActivity(inscriptionActivity)
         }
     }

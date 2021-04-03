@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.InscriptionActivity"
+            android:name=".activity.RegistrationActivity"
             android:theme="@style/Theme.NearYou.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"

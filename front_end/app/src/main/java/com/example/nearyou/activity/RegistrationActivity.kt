@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Integer.parseInt
 
-class InscriptionActivity : Activity() {
+class RegistrationActivity : Activity() {
     private lateinit var binding: ActivityInscriptionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,14 +61,14 @@ class InscriptionActivity : Activity() {
                                 when (response.code) {
                                     ResponseCode.S_SUCCESS -> {
                                         UserDAO.saveCredentialCache(
-                                            signCredentials,
-                                            applicationContext
+                                                signCredentials,
+                                                applicationContext
                                         )
                                         startActivity(
-                                            Intent(
-                                                this@InscriptionActivity,
-                                                MainActivity::class.java
-                                            )
+                                                Intent(
+                                                        this@RegistrationActivity,
+                                                        MainActivity::class.java
+                                                )
                                         )
                                     }
                                     ResponseCode.E_NO_INTERNET -> {
@@ -118,7 +118,7 @@ class InscriptionActivity : Activity() {
         }
 
         btnC.setOnClickListener {
-            val loginActivity = Intent(this@InscriptionActivity, LoginActivity::class.java)
+            val loginActivity = Intent(this@RegistrationActivity, LoginActivity::class.java)
             startActivity(loginActivity)
         }
     }
@@ -127,7 +127,7 @@ class InscriptionActivity : Activity() {
         super.onResume()
 
         if (UserDAO.user != null) {
-            startActivity(Intent(this@InscriptionActivity, MainActivity::class.java))
+            startActivity(Intent(this@RegistrationActivity, MainActivity::class.java))
         }
     }
 
