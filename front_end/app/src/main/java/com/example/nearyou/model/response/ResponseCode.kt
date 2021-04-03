@@ -2,6 +2,7 @@ package com.example.nearyou.model.response
 
 enum class ResponseCode(code: String) {
     NO_ERROR_KNOWN(""),
+    E_NO_INTERNET("E-NoInternet"),
     E_UNKNOWN_ROUTE("E-UnknownRoute"),
     E_UNKNOWN_ERROR("E-UnknownError"),
     E_NO_TOKEN("E-NoToken"),
@@ -24,6 +25,7 @@ class ResponseCodeBuilder {
     companion object {
         fun getResponseCodeInstance(code: String): ResponseCode {
             return when (code) {
+                "E-NoInternet" -> ResponseCode.E_NO_INTERNET
                 "E-UnknownRoute" -> ResponseCode.E_UNKNOWN_ROUTE
                 "E-UnknownError" -> ResponseCode.E_UNKNOWN_ERROR
                 "E-NoToken" -> ResponseCode.E_NO_TOKEN

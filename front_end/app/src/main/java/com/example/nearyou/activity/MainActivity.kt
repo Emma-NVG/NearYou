@@ -6,12 +6,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -19,7 +17,6 @@ import androidx.navigation.ui.*
 import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityMainBinding
 import com.example.nearyou.model.Permission
-import com.example.nearyou.model.database.DatabaseHandler
 import com.example.nearyou.model.user.UserDAO
 import com.example.nearyou.service.LocationBackgroundService
 import com.google.android.material.navigation.NavigationView
@@ -81,22 +78,6 @@ class MainActivity : AppCompatActivity() {
                 finishAffinity()
             }
         })
-//TODO change language
-        //set language according to language state in database
-        val currentLang = DatabaseHandler(this).getConf("language")
-        if (currentLang == "fr") {
-            Log.e("currentLang", "français")
-        } else {
-            Log.e("currentLang", "anglais")
-        }
-
-        //set theme according to theme state in database
-        val currentTheme = DatabaseHandler(this).getConf("theme")
-        if (currentTheme == "light") {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }

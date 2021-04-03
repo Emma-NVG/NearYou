@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nearyou.R
 import com.example.nearyou.databinding.FragmentHomeBinding
+import com.example.nearyou.model.Permission
 import com.example.nearyou.model.response.ResponseCode
 import com.example.nearyou.model.user.UserDAO
 import com.example.nearyou.model.user.member.Member
@@ -37,7 +38,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        //Check if geolocation active
+        // Check if geolocation active
         val lm: LocationManager =
             context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         var gpsEnabled = false
@@ -49,7 +50,14 @@ class HomeFragment : Fragment() {
         //Display members near user
         val title: TextView = binding.title
         val recyclerView = binding.recycler
-        if (gpsEnabled) {
+        if (gpsEnabled && Permission.isPermissionsAllowed(
+                arrayOf(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                requireContext()
+            )
+        ) {
             CoroutineScope(Dispatchers.Main).launch {
                 val response = UserDAO.retrieveAllUserNearMe()
                 val listPerson: Array<Member> = UserDAO.retrieveAllUserNearMe().data
@@ -74,8 +82,14 @@ class HomeFragment : Fragment() {
                             recyclerView.visibility = View.GONE
                         }
                     }
+                    ResponseCode.E_NO_INTERNET -> {
+                        title.text = getString(R.string.no_internet)
+                        title.setTextColor(Color.RED)
+
+                        recyclerView.visibility = View.GONE
+                    }
                     else -> {
-                        title.text = getString(R.string.title_list_person_empty)
+                        title.text = getString(R.string.unknown_error)
                         title.setTextColor(Color.RED)
 
                         recyclerView.visibility = View.GONE
@@ -83,10 +97,18 @@ class HomeFragment : Fragment() {
                 }
             }
         } else {
-            title.text = getString(R.string.location_needed)
-            title.setTextColor(Color.RED)
+            if (gpsEnabled) {
+                // Permission isn't allowed
+                title.text = getString(R.string.location_needed)
+                title.setTextColor(Color.RED)
 
-            recyclerView.visibility = View.GONE
+                recyclerView.visibility = View.GONE
+            } else {
+                title.text = getString(R.string.location_deactivate)
+                title.setTextColor(Color.RED)
+
+                recyclerView.visibility = View.GONE
+            }
         }
         return root
     }

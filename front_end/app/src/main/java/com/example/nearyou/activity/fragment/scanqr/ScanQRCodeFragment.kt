@@ -122,6 +122,9 @@ class ScanQRCodeFragment : Fragment() {
                             ResponseCode.E_NO_TOKEN, ResponseCode.E_UNAUTHORIZED -> {
                                 showSnackbarErrorScan(R.string.invalid_data)
                             }
+                            ResponseCode.E_NO_INTERNET -> {
+                                showSnackbarErrorScan(R.string.no_internet)
+                            }
                             else -> {
                                 showSnackbarErrorScan(R.string.unknown_error)
                             }
