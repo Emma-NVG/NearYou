@@ -11,6 +11,7 @@ class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // Update theme
         val currentTheme = DatabaseHandler(this).getConf("theme")
         if (currentTheme == "light") {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -18,6 +19,7 @@ class MyApplication: Application() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
+        // Update language
         val conf: Configuration = resources.configuration
         conf.setLocale(Locale(DatabaseHandler(this).getConf("language")))
         resources.updateConfiguration(conf, resources.displayMetrics)

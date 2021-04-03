@@ -8,5 +8,4 @@ data class Link(
     val link: String,
     private val created_date: String,
     private val edited_date: String
-) {
-}
+)
