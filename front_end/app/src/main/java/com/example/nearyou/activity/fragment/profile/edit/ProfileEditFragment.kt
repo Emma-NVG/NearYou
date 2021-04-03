@@ -14,13 +14,13 @@ import com.example.nearyou.model.user.UserDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Integer.parseInt
+
 
 class ProfileEditFragment : Fragment() {
 
     private var _binding: FragmentProfileEditBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -35,17 +35,33 @@ class ProfileEditFragment : Fragment() {
         val name: EditText = binding.name
         val firstname: EditText = binding.firstname
         val status: EditText = binding.status
-        val save: Button = binding.save
+        val addBtn: Button = binding.addBtn
+        val saveBtn: Button = binding.saveBtn
+
+        age.setText(UserDAO.user?.age.toString())
+        name.setText(UserDAO.user?.surname.toString())
+        firstname.setText(UserDAO.user?.first_name.toString())
+        status.setText(UserDAO.user?.custom_status.toString())
 
         val listLink: Array<Link> = UserDAO.user?.links!!
         val recyclerView = binding.listLink
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = LinkListRecyclerAdapter(
-            listLink,
-            requireContext()
-        )
 
-        save.setOnClickListener {
+        var adapter = LinkListRecyclerAdapter(listLink, requireContext())
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
+
+//        val list: ArrayList<Link> = listLink.toList() as ArrayList<Link>
+//
+//        addBtn.setOnClickListener {
+//            var link: Link = Link(listLink.size, "","","")
+//            Log.e("avant", list.size.toString())
+//            list.add(link)
+//            Log.e("après", list.size.toString())
+//           adapter = LinkListRecyclerAdapter(listLink, requireContext())
+//           recyclerView.adapter = adapter
+//        }
+
+        saveBtn.setOnClickListener {
             val list = arrayOf(
                 age,
                 name,
@@ -55,9 +71,13 @@ class ProfileEditFragment : Fragment() {
             val listEmptyInput = list.filter { it.text.isEmpty() }
 
             if (listEmptyInput.isEmpty()) {
-                if (Integer.parseInt(age.text.toString()) < 130) {
+                if (parseInt(age.text.toString()) < 130) {
                     CoroutineScope(Dispatchers.Main).launch {
-//                        recyclerView.adapter!!.
+                        UserDAO.user?.age = parseInt(age.text.toString())
+                        UserDAO.user?.surname = name.text.toString()
+                        UserDAO.user?.first_name = firstname.text.toString()
+                        UserDAO.user?.custom_status = status.text.toString()
+                        UserDAO.user?.links = adapter.getItems()
                         //TODO put modifications in database
                     }
                 } else {
@@ -70,7 +90,6 @@ class ProfileEditFragment : Fragment() {
             }
         }
 
-
         return root
     }
 
@@ -78,4 +97,6 @@ class ProfileEditFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }
