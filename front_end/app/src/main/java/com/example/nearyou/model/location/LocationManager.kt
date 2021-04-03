@@ -11,6 +11,7 @@ import io.ktor.http.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.net.UnknownHostException
 
 
 class LocationManager {
@@ -35,6 +36,8 @@ class LocationManager {
         } catch (e: ResponseException) {
             val data = e.response.content.readUTF8Line(10000).toString().replace("{}", "null");
             Json.decodeFromString(data)
+        } catch (e: UnknownHostException) {
+            return Json.decodeFromString("{\"message\":\"No internet !\",\"code\":\"E-NoInternet\",\"data\":null}")
         } catch (e: Exception) {
             return Json.decodeFromString("{\"message\":\"\",\"code\":\"E-UnknownError\",\"data\":null}")
         }

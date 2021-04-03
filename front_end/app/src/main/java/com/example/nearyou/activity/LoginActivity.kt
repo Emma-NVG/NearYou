@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityLoginBinding
 import com.example.nearyou.model.credential.LoginCredential
 import com.example.nearyou.model.response.ResponseCode
@@ -40,20 +41,23 @@ class LoginActivity : Activity() {
                             UserDAO.saveCredentialCache(credentials, applicationContext)
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         }
+                        ResponseCode.E_NO_INTERNET -> {
+                            inputMail.error = getString(R.string.no_internet)
+                        }
                         ResponseCode.E_EMAIL_TOO_LONG -> {
-                            inputMail.error = "Adresse mail trop longue !"
+                            inputMail.error = getString(R.string.alert_email_too_long)
                         }
                         ResponseCode.E_BAD_EMAIL_FORMAT -> {
-                            inputMail.error = "Adresse mail invalide !"
+                            inputMail.error = getString(R.string.alert_invalid_email)
                         }
                         ResponseCode.E_WRONG_CREDENTIALS -> {
-                            inputMail.error = "L'adresse mail ne correspond pas au mot de passe"
+                            inputMail.error = getString(R.string.alert_wrong_credential)
                         }
-                        else -> inputMail.error = "Erreur inconnue"
+                        else -> inputMail.error = getString(R.string.unknown_error)
                     }
                 }
             } else {
-                inputMail.error = "Adresse mail invalide"
+                inputMail.error = getString(R.string.alert_invalid_email)
             }
         }
 

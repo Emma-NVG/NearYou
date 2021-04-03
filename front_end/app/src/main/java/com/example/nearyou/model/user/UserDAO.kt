@@ -28,7 +28,7 @@ object UserDAO {
         sharedEditor.apply()
     }
 
-    fun getCredential(ctx: Context): LoginCredential? {
+    fun getCacheCredential(ctx: Context): LoginCredential? {
         val shared = ctx.getSharedPreferences("Credential", Context.MODE_PRIVATE)
 
         val login = shared.getString("login", null)

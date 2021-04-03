@@ -2,9 +2,9 @@ package com.example.nearyou.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nearyou.R
@@ -51,6 +51,9 @@ class CatchLinkProfile : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 when (result.code) {
                     ResponseCode.S_SUCCESS -> {
+                        binding.fragment.visibility = View.VISIBLE
+                        binding.error.visibility = View.GONE
+
                         val bundle = Bundle()
                         bundle.putString("User", Json.encodeToString(result.data))
 
@@ -60,13 +63,26 @@ class CatchLinkProfile : AppCompatActivity() {
                             .add(binding.fragment.id, ProfileFragment())
                             .commit()
                     }
+                    ResponseCode.E_NO_INTERNET -> {
+                        binding.fragment.visibility = View.GONE
+                        binding.error.visibility = View.VISIBLE
+
+                        binding.error.text = getString(R.string.no_internet)
+                    }
+                    ResponseCode.E_NO_RESOURCE -> {
+                        binding.fragment.visibility = View.GONE
+                        binding.error.visibility = View.VISIBLE
+
+                        binding.error.text = getString(R.string.no_user)
+                    }
                     else -> {
-                        Log.e("Error", result.toString())
+                        binding.fragment.visibility = View.GONE
+                        binding.error.visibility = View.VISIBLE
+
+                        binding.error.text = getString(R.string.unknown_error)
                     }
                 }
             }
-
-
         }
     }
 

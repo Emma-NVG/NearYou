@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import com.example.nearyou.R
 import com.example.nearyou.databinding.ActivityInscriptionBinding
 import com.example.nearyou.model.credential.SignCredential
 import com.example.nearyou.model.response.ResponseCode
@@ -70,45 +71,48 @@ class InscriptionActivity : Activity() {
                                             )
                                         )
                                     }
+                                    ResponseCode.E_NO_INTERNET -> {
+                                        inputMail.error = getString(R.string.no_internet)
+                                    }
                                     ResponseCode.E_AGE_TOO_YOUNG -> {
-                                        inputAge.error = "Vous êtes trop jeune !"
+                                        inputAge.error = getString(R.string.alert_too_young)
                                     }
                                     ResponseCode.E_EMAIL_TOO_LONG -> {
-                                        inputMail.error = "Adresse mail trop longue !"
+                                        inputMail.error = getString(R.string.alert_email_too_long)
                                     }
                                     ResponseCode.E_BAD_EMAIL_FORMAT -> {
-                                        inputMail.error = "Adresse mail invalide !"
+                                        inputMail.error = getString(R.string.alert_invalid_email)
                                     }
                                     ResponseCode.E_EMAIL_KNOWN -> {
-                                        inputMail.error = "Adresse mail déjà utilisée !"
+                                        inputMail.error = getString(R.string.alert_email_used)
                                     }
                                     ResponseCode.E_FIRST_NAME_TOO_LONG -> {
-                                        inputFirstname.error = "Prénom trop long !"
+                                        inputFirstname.error = getString(R.string.alert_name_too_long)
                                     }
                                     ResponseCode.E_SURNAME_TOO_LONG -> {
-                                        inputName.error = "Nom trop long !"
+                                        inputName.error = getString(R.string.alert_surname_too_long)
                                     }
                                     ResponseCode.E_PASSWORD_TOO_LONG -> {
-                                        inputPassword.error = "Mot de passe trop long !"
+                                        inputPassword.error = getString(R.string.alert_password_too_long)
                                     }
                                     ResponseCode.E_PASSWORD_TOO_SHORT -> {
-                                        inputPassword.error = "Mot de passe trop court !"
+                                        inputPassword.error = getString(R.string.alert_password_too_short)
                                     }
-                                    else -> inputMail.error = "Une erreur inconnue est survenue"
+                                    else -> inputMail.error = getString(R.string.unknown_error)
                                 }
                             }
                         } else {
-                            inputPasswordC.error = "Mot de passe différent"
+                            inputPasswordC.error = getString(R.string.alert_password_different)
                         }
                     } else {
-                        inputMail.error = "Adresse mail invalide"
+                        inputMail.error = getString(R.string.alert_invalid_email)
                     }
                 } else {
-                    inputAge.error = "Vous êtes trop vieux"
+                    inputAge.error = getString(R.string.alert_too_old)
                 }
             } else {
                 listEmptyInput.forEach {
-                    it.error = "Pas de champ remplis, pas d'inscription !"
+                    it.error = getString(R.string.alert_no_input)
                 }
             }
         }

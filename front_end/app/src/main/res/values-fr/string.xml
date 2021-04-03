@@ -22,13 +22,10 @@
     <string name="input_name">Nom</string>
     <string name="input_age">Âge</string>
     <string name="input_mail">Mail</string>
-    <string name="input_status">Statut</string>
     <string name="input_password">Mot de passe</string>
     <string name="input_password_c">Confirmation mot de passe</string>
     <string name="btn_connection">Connexion</string>
     <string name="btn_inscription">Inscription</string>
-    <string name="save">Sauvegarder</string>
-
 
     <string name="alert_too_young">Vous êtes trop jeune !</string>
     <string name="alert_too_old">Vous êtes trop vieux !</string>
@@ -44,14 +41,14 @@
     <string name="alert_wrong_credential">L\'adresse mail ne correspond pas au mot de passe !</string>
 
     <string name="title_list_person">Ces personnes sont proches de vous !</string>
-    <string name="title_list_person_empty">Vous êtes seul au world …</string>
+    <string name="title_list_person_empty">Vous êtes seul au monde …</string>
     <string name="location_needed">Nous avons besoin d\'avoir accès à votre position !</string>
     <string name="location_deactivate">Veuillez activer votre position !</string>
     <string name="camera_needed">Nous avons besoin d\'avoir accès à votre caméra !</string>
 
     <string name="unknown_error">Une erreur inconnue est survenue ! veuillez réessayer plus tard !</string>
     <string name="no_user">Aucun utilisateur correspond aux données trouvées !</string>
-    <string name="no_internet">Please, connect to internet…</string>
+    <string name="no_internet">Connectez-vous à Internet…</string>
     <string name="invalid_data">Données invalides !</string>
 
     <string name="display_age">%d ans</string>
@@ -60,7 +57,7 @@
 
     <string name="theme_title">Thème</string>
     <string name="language_title">Langue de l\'application</string>
-    <string name="language_french">French</string>
-    <string name="language_english">English</string>
+    <string name="language_french">Français</string>
+    <string name="language_english">Anglais</string>
     <string name="night_theme_label">Thème sombre</string>
 </resources>
