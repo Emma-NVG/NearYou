@@ -67,4 +67,6 @@
     <string name="force_logout">Vous avez été déconnecté car vos identifiants ont du être changé…</string>
     <string name="user_data_updated">Modifications enregistrées !</string>
     <string name="user_data_unhautorized">Vous n\'êtes pas autorisé à modifier ce profil !</string>
+
+    <string name="account_visibility">Profil public ?</string>
 </resources>

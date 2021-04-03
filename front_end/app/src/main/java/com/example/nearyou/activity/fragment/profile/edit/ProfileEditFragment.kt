@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,7 @@ class ProfileEditFragment : Fragment() {
         _binding = FragmentProfileEditBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val visibility: SwitchCompat = binding.isPublic
         val age: EditText = binding.age
         val name: EditText = binding.name
         val firstName: EditText = binding.firstname
@@ -42,6 +44,7 @@ class ProfileEditFragment : Fragment() {
         val addBtn: Button = binding.addBtn
         val saveBtn: Button = binding.saveBtn
 
+        visibility.isChecked = UserDAO.user?.is_public == 1
         age.setText(UserDAO.user?.age.toString())
         name.setText(UserDAO.user?.surname.toString())
         firstName.setText(UserDAO.user?.first_name.toString())
@@ -69,14 +72,14 @@ class ProfileEditFragment : Fragment() {
 
             if (listEmptyInput.isEmpty()) {
                 if (parseInt(age.text.toString()) < 130) {
-                    if (status.text.length > 150) {
+                    if (status.text.length < 150) {
                         CoroutineScope(Dispatchers.Main).launch {
                             val result = UserDAO.updateUserData(
                                     name.text.toString(),
                                     firstName.text.toString(),
                                     parseInt(age.text.toString()),
                                     status.text.toString(),
-                                    true,
+                                    visibility.isChecked,
                                     mutableListLink.filter { it.link.isNotBlank() }.toTypedArray()
                             )
 
