@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.example.nearyou.databinding.FragmentSettingsBinding
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 
 class SettingsFragment : Fragment() {
@@ -22,6 +24,14 @@ class SettingsFragment : Fragment() {
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val frenchLang: ConstraintLayout = binding.containerFr
+        val englishLang: ConstraintLayout = binding.containerEn
+        val switch: SwitchMaterial = binding.switchTheme
+
+        // To listen for a switch's checked/unchecked state changes
+//        switch.setOnCheckedChangeListener { buttonView, isChecked
+//        }
 
         return root
     }
