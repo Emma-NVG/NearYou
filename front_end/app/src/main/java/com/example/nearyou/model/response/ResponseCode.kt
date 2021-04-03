@@ -2,6 +2,7 @@ package com.example.nearyou.model.response
 
 enum class ResponseCode {
     NO_ERROR_KNOWN,
+    E_NO_INTERNET,
     E_UNKNOWN_ROUTE,
     E_UNKNOWN_ERROR,
     E_NO_TOKEN,
