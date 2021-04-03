@@ -6,68 +6,68 @@
     <string name="ic_qr_scanner">Scan QR Code</string>
     <string name="ic_menu_open">Close menu</string>
 
-    <string name="menu_home">Accueil</string>
-    <string name="menu_account">Mon compte</string>
-    <string name="menu_profile">Profil</string>
-    <string name="menu_profile_access">Générer QR Code d\'accès</string>
-    <string name="menu_profile_edit">Modifier profil</string>
-    <string name="menu_scan">Scanner QR Code</string>
-    <string name="menu_settings">Paramètres</string>
-    <string name="menu_logout">Se déconnecter</string>
-    <string name="menu_retry">Réessayer</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_account">My Account</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_profile_access">Generate personnal QR Code</string>
+    <string name="menu_profile_edit">Modify profile</string>
+    <string name="menu_scan">Scan QR Code</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Sign out</string>
+    <string name="menu_retry">Retry</string>
 
 
     <string name="logo_img">NearYou logo</string>
-    <string name="input_fname">Prénom</string>
-    <string name="input_name">Nom</string>
-    <string name="input_age">Âge</string>
+    <string name="input_fname">Firstname</string>
+    <string name="input_name">Surname</string>
+    <string name="input_age">Age</string>
     <string name="input_mail">Mail</string>
-    <string name="input_status">Statut</string>
-    <string name="input_password">Mot de passe</string>
-    <string name="input_password_c">Confirmation mot de passe</string>
-    <string name="btn_connection">Connexion</string>
-    <string name="btn_inscription">Inscription</string>
-    <string name="save">Sauvegarder</string>
+    <string name="input_status">Status</string>
+    <string name="input_password">Password</string>
+    <string name="input_password_c">Password confirmation</string>
+    <string name="btn_connection">Connection</string>
+    <string name="btn_inscription">Sign in</string>
+    <string name="save">Save</string>
 
 
-    <string name="alert_too_young">Vous êtes trop jeune !</string>
-    <string name="alert_too_old">Vous êtes trop vieux !</string>
-    <string name="alert_email_too_long">Adresse mail trop longue !</string>
-    <string name="alert_invalid_email">Adresse mail invalide !</string>
-    <string name="alert_email_used">Adresse mail déjà utilisée !</string>
-    <string name="alert_name_too_long">Prénom trop long !</string>
-    <string name="alert_surname_too_long">Nom trop long !</string>
-    <string name="alert_password_too_long">Mot de passe trop long !</string>
-    <string name="alert_password_too_short">Mot de passe trop court !</string>
-    <string name="alert_password_different">Mot de passe différent !</string>
-    <string name="alert_no_input">Pas d\'informations, pas d\'inscription !</string>
-    <string name="alert_status_too_long">Trop long !</string>
-    <string name="alert_wrong_credential">L\'adresse mail ne correspond pas au mot de passe !</string>
+    <string name="alert_too_young">You are too young !</string>
+    <string name="alert_too_old">You are too old !</string>
+    <string name="alert_email_too_long">Mail address too long !</string>
+    <string name="alert_invalid_email">Mail address invalid !</string>
+    <string name="alert_email_used">Mail address already known !</string>
+    <string name="alert_name_too_long">Firstname too long !</string>
+    <string name="alert_surname_too_long">Name too long !</string>
+    <string name="alert_password_too_long">Password too long !</string>
+    <string name="alert_password_too_short">Password too short !</string>
+    <string name="alert_password_different">Password does not match !</string>
+    <string name="alert_no_input">No data, no registration !</string>
+    <string name="alert_status_too_long">Too long !</string>
+    <string name="alert_wrong_credential">Mail address does not match password !</string>
 
-    <string name="title_list_person">Ces personnes sont proches de vous !</string>
-    <string name="title_list_person_empty">Vous êtes seul au world …</string>
-    <string name="location_needed">Nous avons besoin d\'avoir accès à votre position !</string>
-    <string name="location_deactivate">Veuillez activer votre position !</string>
-    <string name="camera_needed">Nous avons besoin d\'avoir accès à votre caméra !</string>
+    <string name="title_list_person">These people are near you !</string>
+    <string name="title_list_person_empty">You are alone in the world …</string>
+    <string name="location_needed">We nedd the permission to use your location !</string>
+    <string name="location_deactivate">Please activate your geolocation !</string>
+    <string name="camera_needed">We need the permission to use your camera !</string>
 
-    <string name="unknown_error">Une erreur inconnue est survenue ! veuillez réessayer plus tard !</string>
-    <string name="no_user">Aucun utilisateur correspond aux données trouvées !</string>
+    <string name="unknown_error">An unknown error happened ! Please try again later !</string>
+    <string name="no_user">No user matches the data found !</string>
     <string name="no_internet">Please, connect to internet…</string>
-    <string name="invalid_data">Données invalides !</string>
+    <string name="invalid_data">Invalid data !</string>
 
-    <string name="display_age">%d ans</string>
+    <string name="display_age">%d years</string>
     <string name="display_name">%S %s</string>
     <string name="display_distance">%s km</string>
 
-    <string name="theme_title">Thème</string>
-    <string name="language_title">Langue de l\'application</string>
+    <string name="theme_title">Theme</string>
+    <string name="language_title">Language of the application</string>
     <string name="language_french">French</string>
     <string name="language_english">English</string>
-    <string name="night_theme_label">Thème sombre</string>
+    <string name="night_theme_label">Dark theme</string>
 
-    <string name="notification_location">Service de localisation activée, NearYou vous espionne pour trouver des amis proches…</string>
+    <string name="notification_location">Geolocation service activated, NearYou is spying on you to find you close friends…</string>
 
-    <string name="force_logout">Vous avez été déconnecté car vos identifiants ont du être changé…</string>
-    <string name="user_data_updated">Modifications enregistrées !</string>
-    <string name="user_data_unhautorized">Vous n\'êtes pas autorisé à modifier ce profil !</string>
+    <string name="force_logout">You have been logged out because your credentials must have benn changed…</string>
+    <string name="user_data_updated">Modifications saved !</string>
+    <string name="user_data_unhautorized">You are not allowed to modify this profile !</string>
 </resources>
