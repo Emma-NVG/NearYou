@@ -60,4 +60,6 @@
     <string name="language_french">Français</string>
     <string name="language_english">Anglais</string>
     <string name="night_theme_label">Thème sombre</string>
+
+    <string name="notification_location">Service de localisation activée, NearYou vous espionne pour trouver des amis proches…</string>
 </resources>
