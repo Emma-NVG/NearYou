@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         refreshUserDataEachMinute()
     }
 
-    fun refreshUserDataEachMinute() {
+    private fun refreshUserDataEachMinute() {
         Timer().scheduleAtFixedRate(
             object : TimerTask() {
                 override fun run() {
