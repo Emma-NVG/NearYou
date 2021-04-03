@@ -9,7 +9,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_account">My Account</string>
     <string name="menu_profile">Profile</string>
-    <string name="menu_profile_access">Generate personnal QR Code</string>
+    <string name="menu_profile_access">Generate personal QR Code</string>
     <string name="menu_profile_edit">Modify profile</string>
     <string name="menu_scan">Scan QR Code</string>
     <string name="menu_settings">Settings</string>
@@ -18,7 +18,7 @@
 
 
     <string name="logo_img">NearYou logo</string>
-    <string name="input_fname">Firstname</string>
+    <string name="input_fname">First-name</string>
     <string name="input_name">Surname</string>
     <string name="input_age">Age</string>
     <string name="input_mail">Mail</string>
@@ -35,7 +35,7 @@
     <string name="alert_email_too_long">Mail address too long !</string>
     <string name="alert_invalid_email">Mail address invalid !</string>
     <string name="alert_email_used">Mail address already known !</string>
-    <string name="alert_name_too_long">Firstname too long !</string>
+    <string name="alert_name_too_long">First-name too long !</string>
     <string name="alert_surname_too_long">Name too long !</string>
     <string name="alert_password_too_long">Password too long !</string>
     <string name="alert_password_too_short">Password too short !</string>
@@ -46,7 +46,7 @@
 
     <string name="title_list_person">These people are near you !</string>
     <string name="title_list_person_empty">You are alone in the world …</string>
-    <string name="location_needed">We nedd the permission to use your location !</string>
+    <string name="location_needed">We need the permission to use your location !</string>
     <string name="location_deactivate">Please activate your geolocation !</string>
     <string name="camera_needed">We need the permission to use your camera !</string>
 
@@ -67,7 +67,7 @@
 
     <string name="notification_location">Geolocation service activated, NearYou is spying on you to find you close friends…</string>
 
-    <string name="force_logout">You have been logged out because your credentials must have benn changed…</string>
+    <string name="force_logout">You have been logged out because your credentials must have been changed…</string>
     <string name="user_data_updated">Modifications saved !</string>
     <string name="user_data_unhautorized">You are not allowed to modify this profile !</string>
 

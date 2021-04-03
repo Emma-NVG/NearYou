@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">NearYou</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_desc">En-tête navigation</string>
     <string name="action_settings">Paramètres</string>
 
     <string name="ic_qr_scanner">Scan QR Code</string>
@@ -17,7 +17,7 @@
     <string name="menu_retry">Réessayer</string>
 
 
-    <string name="logo_img">NearYou logo</string>
+    <string name="logo_img">Logo NearYou</string>
     <string name="input_fname">Prénom</string>
     <string name="input_name">Nom</string>
     <string name="input_age">Âge</string>
@@ -49,7 +49,7 @@
     <string name="location_deactivate">Veuillez activer votre position !</string>
     <string name="camera_needed">Nous avons besoin d\'avoir accès à votre caméra !</string>
 
-    <string name="unknown_error">Une erreur inconnue est survenue ! veuillez réessayer plus tard !</string>
+    <string name="unknown_error">Une erreur inconnue est survenue ! Veuillez réessayer plus tard !</string>
     <string name="no_user">Aucun utilisateur correspond aux données trouvées !</string>
     <string name="no_internet">Connectez-vous à Internet…</string>
     <string name="invalid_data">Données invalides !</string>
@@ -66,7 +66,7 @@
 
     <string name="notification_location">Service de localisation activée, NearYou vous espionne pour trouver des amis proches…</string>
 
-    <string name="force_logout">Vous avez été déconnecté car vos identifiants ont du être changé…</string>
+    <string name="force_logout">Vous avez été déconnecté car vos identifiants ont dû être changé…</string>
     <string name="user_data_updated">Modifications enregistrées !</string>
     <string name="user_data_unhautorized">Vous n\'êtes pas autorisé à modifier ce profil !</string>
 

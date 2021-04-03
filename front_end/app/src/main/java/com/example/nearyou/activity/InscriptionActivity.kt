@@ -131,7 +131,6 @@ class InscriptionActivity : Activity() {
         }
     }
 
-    //TODO refactor
     private fun isEmailValid(email: String): Boolean {
         val cs: CharSequence = email
         return android.util.Patterns.EMAIL_ADDRESS.matcher(cs).matches()

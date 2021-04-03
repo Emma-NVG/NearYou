@@ -82,5 +82,3 @@ class LoginActivity : Activity() {
     }
 
 }
-
-//TODO rename files in signin signup
