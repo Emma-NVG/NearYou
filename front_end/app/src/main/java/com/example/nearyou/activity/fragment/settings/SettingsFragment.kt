@@ -1,5 +1,6 @@
 package com.example.nearyou.activity.fragment.settings
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
@@ -10,8 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.nearyou.R
+import com.example.nearyou.activity.LoadingActivity
 import com.example.nearyou.databinding.FragmentSettingsBinding
 import com.example.nearyou.model.database.DatabaseHandler
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -50,7 +50,8 @@ class SettingsFragment : Fragment() {
                         DatabaseHandler(requireContext()).changeConf("theme", "black")
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-                        findNavController().navigate(R.id.action_nav_settings_self)
+                        requireContext().startActivity(Intent(requireContext(), LoadingActivity::class.java))
+                        activity?.finishAffinity()
                     }
                 }
 
@@ -59,7 +60,8 @@ class SettingsFragment : Fragment() {
                         DatabaseHandler(requireContext()).changeConf("theme", "light")
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-                        findNavController().navigate(R.id.action_nav_settings_self)
+                        requireContext().startActivity(Intent(requireContext(), LoadingActivity::class.java))
+                        activity?.finishAffinity()
                     }
                 }
 
@@ -112,7 +114,8 @@ class SettingsFragment : Fragment() {
         conf.setLocale(Locale(language))
         resources.updateConfiguration(conf, resources.displayMetrics)
 
-        findNavController().navigate(R.id.action_nav_settings_self)
+        requireContext().startActivity(Intent(requireContext(), LoadingActivity::class.java))
+        activity?.finishAffinity()
     }
 
     override fun onDestroyView() {

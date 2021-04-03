@@ -35,6 +35,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+
+        binding.reload.setOnClickListener {
+            retrieveUserNearMe()
+        }
+
+        retrieveUserNearMe()
+
         return binding.root
     }
 
@@ -48,12 +56,12 @@ class HomeFragment : Fragment() {
         } catch (ex: Exception) {
         }
 
-        binding.reload.setOnClickListener {
-            retrieveUserNearMe()
-        }
-
         val title: TextView = binding.title
         val recyclerView = binding.recycler
+
+        title.visibility = View.GONE
+        recyclerView.visibility = View.GONE
+
         if (gpsEnabled && Permission.isPermissionsAllowed(
                         arrayOf(
                                 android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -63,9 +71,6 @@ class HomeFragment : Fragment() {
                 )
         ) {
             CoroutineScope(Dispatchers.Main).launch {
-                title.visibility = View.GONE
-                recyclerView.visibility = View.GONE
-
                 val response = UserDAO.retrieveAllUserNearMe()
                 val listPerson: Array<Member> = UserDAO.retrieveAllUserNearMe().data
 
@@ -105,6 +110,7 @@ class HomeFragment : Fragment() {
                 }
             }
         } else {
+            title.visibility = View.VISIBLE
             if (gpsEnabled) {
                 // Permission isn't allowed
                 title.text = getString(R.string.location_needed)
