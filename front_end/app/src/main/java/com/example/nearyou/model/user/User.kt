@@ -10,7 +10,7 @@ data class User(
     var surname: String,
     var first_name: String,
     var age: Int,
-    val custom_status: String,
+    var custom_status: String,
     val is_public: Int,
     var links: Array<Link>,
     val distance: Int,

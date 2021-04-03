@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,7 @@ class LinkListRecyclerAdapter(var dataMedia: Array<Link>, private val ctx: Conte
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val mediaLogo: ImageView = view.findViewById(R.id.logo_modify)
         val mediaLink: EditText = view.findViewById(R.id.link_modify)
-        val mediaDeleteBtn: EditText = view.findViewById(R.id.delete_btn)
+        val mediaDeleteBtn: Button = view.findViewById(R.id.delete_btn)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -41,7 +42,10 @@ class LinkListRecyclerAdapter(var dataMedia: Array<Link>, private val ctx: Conte
             val tabTemp: MutableList<Link> = dataMedia.toMutableList()
             tabTemp.removeAt(index)
             dataMedia = tabTemp.toTypedArray()
+
+            notifyDataSetChanged()
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -51,4 +55,5 @@ class LinkListRecyclerAdapter(var dataMedia: Array<Link>, private val ctx: Conte
     fun getItems(): Array<Link> {
         return dataMedia
     }
+
 }
