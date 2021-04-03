@@ -108,7 +108,7 @@ class InscriptionActivity : Activity() {
                 }
             } else {
                 listEmptyInput.forEach {
-                    it.error = "Pas de champ rempli, pas d'inscription !"
+                    it.error = "Pas de champ remplis, pas d'inscription !"
                 }
             }
         }

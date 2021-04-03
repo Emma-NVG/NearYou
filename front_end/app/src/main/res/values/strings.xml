@@ -31,6 +31,8 @@
     <string name="input_password_c">Confirmation mot de passe</string>
     <string name="btn_connection">Connexion</string>
     <string name="btn_inscription">Inscription</string>
+    <string name="save">Sauvegarder</string>
+
 
     <string name="title_list_person">Ces personnes sont proches de vous !</string>
     <string name="title_list_person_empty">Vous êtes seul au monde …</string>
