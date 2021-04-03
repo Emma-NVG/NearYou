@@ -108,8 +108,8 @@
 
                 <ImageView
                     android:id="@+id/img_fr_flag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/french"
                     app:layout_constraintBottom_toTopOf="@+id/label_fr_flag"
                     app:layout_constraintEnd_toEndOf="@+id/label_fr_flag"
@@ -138,8 +138,8 @@
 
                 <ImageView
                     android:id="@+id/img_en_flag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/english"
                     app:layout_constraintBottom_toTopOf="@+id/label_en_flag"
                     app:layout_constraintEnd_toEndOf="@+id/label_en_flag"
