@@ -69,34 +69,41 @@ class ProfileEditFragment : Fragment() {
 
             if (listEmptyInput.isEmpty()) {
                 if (parseInt(age.text.toString()) < 130) {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        val result = UserDAO.updateUserData(
-                            name.text.toString(),
-                            firstName.text.toString(),
-                            parseInt(age.text.toString()),
-                            status.text.toString(),
-                            true,
-                            mutableListLink.filter { it.link.isNotBlank() }.toTypedArray()
-                        )
+                    if (status.text.length > 150) {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            val result = UserDAO.updateUserData(
+                                    name.text.toString(),
+                                    firstName.text.toString(),
+                                    parseInt(age.text.toString()),
+                                    status.text.toString(),
+                                    true,
+                                    mutableListLink.filter { it.link.isNotBlank() }.toTypedArray()
+                            )
 
-                        when (result.code) {
-                            ResponseCode.S_SUCCESS -> {
-                                Toast.makeText(context, R.string.user_data_updated, Toast.LENGTH_SHORT).show()
-                                findNavController().navigate(R.id.action_nav_profile_edit_to_nav_profile)
+                            when (result.code) {
+                                ResponseCode.S_SUCCESS -> {
+                                    Toast.makeText(context, R.string.user_data_updated, Toast.LENGTH_SHORT).show()
+                                    findNavController().navigate(R.id.action_nav_profile_edit_to_nav_profile)
+                                }
+                                ResponseCode.E_NO_INTERNET -> {
+                                    Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT).show()
+                                }
+                                ResponseCode.E_UNAUTHORIZED -> {
+                                    Toast.makeText(context, R.string.user_data_unhautorized, Toast.LENGTH_SHORT).show()
+                                    findNavController().navigate(R.id.action_nav_profile_edit_to_nav_profile)
+                                }
+                                else -> Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_SHORT).show()
                             }
-                            ResponseCode.E_UNAUTHORIZED -> {
-                                Toast.makeText(context, R.string.user_data_unhautorized, Toast.LENGTH_SHORT).show()
-                                findNavController().navigate(R.id.action_nav_profile_edit_to_nav_profile)
-                            }
-                            else -> Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_SHORT).show()
                         }
+                    } else {
+                        status.error = getString(R.string.alert_status_too_long)
                     }
                 } else {
-                    age.error = "Vous êtes trop vieux"
+                    age.error = getString(R.string.alert_too_old)
                 }
             } else {
                 listEmptyInput.forEach {
-                    it.error = "Pas de champ remplis, pas d'inscription !"
+                    it.error = getString(R.string.alert_no_input)
                 }
             }
         }

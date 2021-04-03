@@ -41,6 +41,7 @@
     <string name="alert_password_too_short">Mot de passe trop court !</string>
     <string name="alert_password_different">Mot de passe différent !</string>
     <string name="alert_no_input">Pas d\'informations, pas d\'inscription !</string>
+    <string name="alert_status_too_long">Trop long !</string>
     <string name="alert_wrong_credential">L\'adresse mail ne correspond pas au mot de passe !</string>
 
     <string name="title_list_person">Ces personnes sont proches de vous !</string>

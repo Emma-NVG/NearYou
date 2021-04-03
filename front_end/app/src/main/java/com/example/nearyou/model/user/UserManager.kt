@@ -59,7 +59,7 @@ class UserManager {
 
             Json.decodeFromString(data)
         } catch (e: ResponseException) {
-            val data = e.response.content.readUTF8Line(10000).toString().replace("{}", "null");
+            val data = e.response.content.readUTF8Line(10000).toString().replace("{}", "null")
             Json.decodeFromString(data)
         } catch (e: UnknownHostException) {
             return Json.decodeFromString("{\"message\":\"No internet !\",\"code\":\"E-NoInternet\",\"data\":null}")
@@ -82,7 +82,7 @@ class UserManager {
             val data = e.response.content.readUTF8Line(10000).toString()
             Json.decodeFromString(data)
         } catch (e: UnknownHostException) {
-            return Json.decodeFromString("{\"message\":\"No internet !\",\"code\":\"E-NoInternet\",\"data\":null}")
+            return Json.decodeFromString("{\"message\":\"No internet !\",\"code\":\"E-NoInternet\",\"data\":[]}")
         } catch (e: Exception) {
             return Json.decodeFromString("{\"message\":\"\",\"code\":\"E-UnknownError\",\"data\":[]}")
         }
@@ -110,12 +110,12 @@ class UserManager {
 
             Json.decodeFromString(data)
         } catch (e: ResponseException) {
-            val data = e.response.content.readUTF8Line(10000).toString()
+            val data = e.response.content.readUTF8Line(10000).toString().replace("{}", "null")
             Json.decodeFromString(data)
         } catch (e: UnknownHostException) {
             return Json.decodeFromString("{\"message\":\"No internet !\",\"code\":\"E-NoInternet\",\"data\":null}")
         } catch (e: Exception) {
-            return Json.decodeFromString("{\"message\":\"\",\"code\":\"E-UnknownError\",\"data\":[]}")
+            return Json.decodeFromString("{\"message\":\"\",\"code\":\"E-UnknownError\",\"data\":null}")
         }
     }
 }
