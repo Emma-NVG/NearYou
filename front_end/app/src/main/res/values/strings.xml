@@ -18,6 +18,7 @@
     <string name="menu_scan">Scanner QR Code</string>
     <string name="menu_settings">Paramètres</string>
     <string name="menu_logout">Se déconnecter</string>
+    <string name="menu_retry">Réessayer</string>
 
 
     <string name="logo_img">NearYou logo</string>
@@ -36,9 +37,10 @@
     <string name="camera_needed">Nous avons besoin d\'avoir accès à votre caméra !</string>
 
     <string name="unknown_error">Une erreur inconnue est survenue ! veuillez réessayer plus tard !</string>
-    <string name="no_user">Aucuns utilisateurs correspondant aux données trouvées !</string>
+    <string name="no_user">Aucun utilisateur correspond aux données trouvées !</string>
     <string name="invalid_data">Données invalides !</string>
 
     <string name="display_age">%d ans</string>
-    <string name="display_name">%s %s</string>
+    <string name="display_name">%S %s</string>
+    <string name="display_distance">%s km</string>
 </resources>

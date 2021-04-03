@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -33,17 +33,15 @@ import org.json.JSONObject
 class ScanQRCodeFragment : Fragment() {
 
     private var _binding: FragmentScanQrBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var codeScanner: CodeScanner
+    private var canScan = true
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         _binding = FragmentScanQrBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -65,7 +63,7 @@ class ScanQRCodeFragment : Fragment() {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                     requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_PERMISSION_CAMERA)
                 } else {
-                    showSnackbar()
+                    showSnackbarCameraPermission()
                 }
             } else {
                 startScanning()
@@ -94,7 +92,7 @@ class ScanQRCodeFragment : Fragment() {
         codeScanner.camera = CodeScanner.CAMERA_BACK
         codeScanner.formats = CodeScanner.ALL_FORMATS
         codeScanner.autoFocusMode = AutoFocusMode.SAFE
-        codeScanner.scanMode = ScanMode.SINGLE
+        codeScanner.scanMode = ScanMode.CONTINUOUS
         codeScanner.isAutoFocusEnabled = true
         codeScanner.isFlashEnabled = false
 
@@ -104,30 +102,32 @@ class ScanQRCodeFragment : Fragment() {
                 val data = JSONObject(it.text)
 
                 CoroutineScope(Dispatchers.IO).launch {
-                    val result = Member.manager.retrieveData(data.getString("id"), data.getString("token"))
+                    val result = Member.manager.retrieveData(data.getString("id"), data.getString("token") + "aaa")
 
-                    when (result.code) {
-                        ResponseCode.S_SUCCESS -> {
-                            withContext(Dispatchers.Main) {
+                    withContext(Dispatchers.Main) {
+                        when (result.code) {
+                            ResponseCode.S_SUCCESS -> {
                                 val bundle = Bundle()
                                 bundle.putString("User", Json.encodeToString(result.data))
                                 findNavController().navigate(R.id.action_nav_scan_qr_to_nav_profile, bundle)
                             }
+                            ResponseCode.E_NO_RESOURCE -> {
+                                showSnackbarErrorScan(R.string.no_user)
+                            }
+                            ResponseCode.E_NO_TOKEN, ResponseCode.E_UNAUTHORIZED -> {
+                                showSnackbarErrorScan(R.string.invalid_data)
+                            }
+                            else -> {
+                                showSnackbarErrorScan(R.string.unknown_error)
+                            }
                         }
-                        ResponseCode.E_NO_RESOURCE -> {
-                            Toast.makeText(context, R.string.no_user, Toast.LENGTH_LONG).show()
-                        }
-                        else -> {
-                            Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_LONG).show()
-                        }
-                    }
 
-                    withContext(Dispatchers.Main) {
                         codeScanner.startPreview()
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, R.string.invalid_data, Toast.LENGTH_LONG).show()
+                showSnackbarErrorScan(R.string.invalid_data)
+                codeScanner.startPreview()
             }
         }
         codeScanner.errorCallback = ErrorCallback { }
@@ -145,7 +145,7 @@ class ScanQRCodeFragment : Fragment() {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startScanning()
                 } else {
-                    showSnackbar()
+                    showSnackbarCameraPermission()
                 }
             }
             REQUEST_PERMISSION_CAMERA_SETTINGS -> {
@@ -154,19 +154,29 @@ class ScanQRCodeFragment : Fragment() {
         }
     }
 
-    private fun showSnackbar() {
-        Snackbar.make(binding.root, R.string.camera_needed, Snackbar.LENGTH_SHORT)
-            .setAction(R.string.menu_settings) {
-                if (activity != null) {
-                    val uri = Uri.fromParts("package", activity?.packageName, null)
+    private fun showSnackbarCameraPermission() {
+        Snackbar.make(binding.root, R.string.camera_needed, Snackbar.LENGTH_LONG)
+                .setAction(R.string.menu_settings) {
+                    if (activity != null) {
+                        val uri = Uri.fromParts("package", activity?.packageName, null)
 
-                    val intent = Intent()
-                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                    intent.data = uri
-                    startActivityForResult(intent, REQUEST_PERMISSION_CAMERA_SETTINGS)
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        intent.data = uri
+                        startActivityForResult(intent, REQUEST_PERMISSION_CAMERA_SETTINGS)
+                    }
                 }
-            }
-            .show()
+                .show()
+    }
+
+    private fun showSnackbarErrorScan(@StringRes message: Int) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.menu_retry) {
+                    if (::codeScanner.isInitialized) {
+                        codeScanner.startPreview()
+                    }
+                }
+                .show()
     }
 
     override fun onDestroyView() {

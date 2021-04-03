@@ -1,7 +1,6 @@
 package com.example.nearyou.activity.fragment.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.example.nearyou.model.user.member.Member
 import com.squareup.picasso.Picasso
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import java.util.*
 
 class ProfileFragment : Fragment() {
 
@@ -60,16 +58,13 @@ class ProfileFragment : Fragment() {
         return root
     }
 
-    private fun displayInformation(
-        urlProfile: String,
+    private fun displayInformation(urlProfile: String,
         surname: String,
         age: Int,
         customStatus: String,
         links: Array<Link>,
         firstName: String
     ) {
-        Log.e("Url", urlProfile)
-
         val profilePicture: ImageView = binding.profilePicture
         val profileName: TextView = binding.profileName
         val profileAge: TextView = binding.profileAge
@@ -78,14 +73,11 @@ class ProfileFragment : Fragment() {
         profileMedias.layoutManager = LinearLayoutManager(context)
 
         Picasso.get()
-            .load(urlProfile)
-            .into(profilePicture)
+                .load(if (urlProfile.isEmpty()) "ERROR" else urlProfile)
+                .error(R.mipmap.ic_error)
+                .into(profilePicture)
 
-        profileName.text = getString(
-            R.string.display_name,
-            firstName.toUpperCase(Locale.ROOT),
-            surname
-        )
+        profileName.text = getString(R.string.display_name, firstName, surname)
 
         profileAge.text = getString(R.string.display_age, age)
         profileStatus.text = customStatus

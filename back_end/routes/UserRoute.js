@@ -160,7 +160,7 @@ const retrieveUserDataRoute = (app) => {
                     const responseData = new ResponseData("Successful recovery of user data !", ResponseCode.S_Success, data);
                     res.status(200).json(responseData)
                 } else {
-                    const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_UnknownError, new DataObject());
+                    const responseData = new ResponseData("An unknown error occurred !", ResponseCode.E_NoResource, new DataObject());
                     res.status(500).json(responseData)
                 }
             })

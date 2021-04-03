@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearyou.R
 import com.example.nearyou.model.Link
+import com.squareup.picasso.Picasso
 
 class MediasRecyclerAdapter(private val dataMedia: Array<Link>) :
     RecyclerView.Adapter<MediasRecyclerAdapter.ViewHolder>() {
@@ -27,7 +28,12 @@ class MediasRecyclerAdapter(private val dataMedia: Array<Link>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, index: Int) {
         val media = dataMedia[index]
 
-        viewHolder.mediaLink.text = "${media.link}"
+        Picasso.get()
+                .load("ERROR")
+                .error(R.mipmap.ic_error)
+                .into(viewHolder.mediaLogo)
+
+        viewHolder.mediaLink.text = media.link
     }
 
     override fun getItemCount(): Int {

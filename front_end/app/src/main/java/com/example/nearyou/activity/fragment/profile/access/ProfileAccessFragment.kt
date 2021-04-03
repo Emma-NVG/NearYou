@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.nearyou.R
 import com.example.nearyou.databinding.FragmentProfileAccessBinding
 import com.example.nearyou.model.user.UserDAO
 import com.google.zxing.BarcodeFormat
@@ -40,13 +41,12 @@ class ProfileAccessFragment : Fragment() {
         val status: TextView = binding.status
 
         Picasso.get()
-            .load(UserDAO.user!!.url_profile)
-            .into(binding.imgProfile)
+                .load(if (UserDAO.user!!.url_profile.isEmpty()) "ERROR" else UserDAO.user!!.url_profile)
+                .error(R.mipmap.ic_error)
+                .into(binding.imgProfile)
 
-        name.text = "${UserDAO.user?.first_name.toString()} ${
-            UserDAO.user?.surname.toString().toUpperCase()
-        }"
-        age.text = "${UserDAO.user?.age.toString()} ans"
+        name.text = getString(R.string.display_name, UserDAO.user?.first_name, UserDAO.user?.surname)
+        age.text = getString(R.string.display_age, UserDAO.user?.age)
         status.text = UserDAO.user?.custom_status.toString()
 
         return binding.root

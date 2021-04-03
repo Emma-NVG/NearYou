@@ -63,7 +63,7 @@ function retrieveUserData(ID_user) {
                     }
                 ]).then((data) => {
                     const userLinks = data[0];
-                    return new User(resultSQL['ID'], resultSQL['URL_PROFILE'], resultSQL['SURNAME'], resultSQL['FIRST_NAME'], resultSQL['AGE'], resultSQL['CUSTOM_STATUS'], resultSQL['IS_PUBLIC'], userLinks, resultSQL['DATE_CREATED'], resultSQL['DATE_EDITED']);
+                    return new User(resultSQL['ID'], resultSQL['URL_PROFILE'], resultSQL['SURNAME'], resultSQL['FIRST_NAME'], resultSQL['AGE'], resultSQL['CUSTOM_STATUS'], resultSQL['IS_PUBLIC'], userLinks, -1, resultSQL['DATE_CREATED'], resultSQL['DATE_EDITED']);
                 });
             } else {
                 return null;
