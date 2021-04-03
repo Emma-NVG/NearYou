@@ -13,7 +13,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-//TODO virer la barre en haut -> passer en Activity
 class LoadingActivity : Activity() {
     private lateinit var binding: ActivityLoadingBinding
 
