@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
@@ -78,21 +77,23 @@ class MainActivity : AppCompatActivity() {
         Timer().scheduleAtFixedRate(
             object : TimerTask() {
                 override fun run() {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        val credentials = UserDAO.getCacheCredential(applicationContext)
+                    if (UserDAO.user != null) {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            val credentials = UserDAO.getCacheCredential(applicationContext)
 
-                        if (credentials != null) {
-                            val result = UserDAO.login(credentials)
-                            Log.e("Result", result.toString())
-                            if (result.code == ResponseCode.E_WRONG_CREDENTIALS) {
+                            if (credentials != null) {
+                                val result = UserDAO.login(credentials)
+
+                                if (result.code == ResponseCode.E_WRONG_CREDENTIALS) {
+                                    UserDAO.logout(applicationContext)
+                                    UserDAO.removeCredential(this@MainActivity)
+                                    Toast.makeText(this@MainActivity, R.string.force_logout, Toast.LENGTH_LONG).show()
+                                }
+                            } else {
                                 UserDAO.logout(applicationContext)
                                 UserDAO.removeCredential(this@MainActivity)
                                 Toast.makeText(this@MainActivity, R.string.force_logout, Toast.LENGTH_LONG).show()
                             }
-                        } else {
-                            UserDAO.logout(applicationContext)
-                            UserDAO.removeCredential(this@MainActivity)
-                            Toast.makeText(this@MainActivity, R.string.force_logout, Toast.LENGTH_LONG).show()
                         }
                     }
                 }
