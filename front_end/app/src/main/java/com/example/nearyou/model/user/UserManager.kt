@@ -93,7 +93,7 @@ class UserManager {
 
         return try {
             val urlString = "https://www.nearyou.iut.apokalypt.fr/api/1.0/user/${UserDAO.user!!.ID}"
-            val data: String = client.patch(urlString) {
+            val data: String = client.post(urlString) {
                 header("Authorization", "Bearer ${UserDAO.user!!.token}")
 
                 body = FormDataContent(
