@@ -58,7 +58,8 @@ class ProfileFragment : Fragment() {
         return root
     }
 
-    private fun displayInformation(urlProfile: String,
+    private fun displayInformation(
+        urlProfile: String,
         surname: String,
         age: Int,
         customStatus: String,

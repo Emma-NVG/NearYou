@@ -27,7 +27,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.json.JSONObject
 
 
 class ScanQRCodeFragment : Fragment() {
@@ -98,11 +97,17 @@ class ScanQRCodeFragment : Fragment() {
 
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
-            try {
-                val data = JSONObject(it.text)
+            codeScanner.stopPreview()
+
+            val url = it.text
+            val segments = url.split("/")
+
+            if (url.startsWith("https://www.nearyou.iut.apokalypt.fr/1.0/user/") && url.endsWith("/profile") && segments.size == 8) {
+                val token = segments[segments.size - 2]
+                val id = segments[segments.size - 3]
 
                 CoroutineScope(Dispatchers.IO).launch {
-                    val result = Member.manager.retrieveData(data.getString("id"), data.getString("token") + "aaa")
+                    val result = Member.manager.retrieveData(id, token)
 
                     withContext(Dispatchers.Main) {
                         when (result.code) {
@@ -125,7 +130,7 @@ class ScanQRCodeFragment : Fragment() {
                         codeScanner.startPreview()
                     }
                 }
-            } catch (e: Exception) {
+            } else {
                 showSnackbarErrorScan(R.string.invalid_data)
                 codeScanner.startPreview()
             }

@@ -3,11 +3,9 @@
     package="com.example.nearyou">
 
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -17,6 +15,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NearYou">
+        <activity android:name=".activity.CatchLinkProfile">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="www.nearyou.iut.apokalypt.fr"
+                    android:pathPattern="/1.0/user/.*/.*/profile" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name=".service.RestarterLocationBackgroundService"
             android:enabled="true"
@@ -48,7 +60,7 @@
 
         <service
             android:name=".service.LocationBackgroundService"
-            android:enabled="true"></service>
+            android:enabled="true" />
     </application>
 
 </manifest>

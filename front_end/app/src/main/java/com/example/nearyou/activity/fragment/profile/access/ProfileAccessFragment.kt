@@ -19,7 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 class ProfileAccessFragment : Fragment() {
 
@@ -57,11 +56,9 @@ class ProfileAccessFragment : Fragment() {
 
         if (UserDAO.user != null) {
             CoroutineScope(Dispatchers.IO).launch {
-                val rootObject= JSONObject()
-                rootObject.put("token", UserDAO.user!!.token)
-                rootObject.put("id", UserDAO.user!!.ID)
+                val url = "https://www.nearyou.iut.apokalypt.fr/1.0/user/${UserDAO.user!!.ID}/${UserDAO.user!!.token}/profile"
 
-                val bitmap = generateQRCode(rootObject.toString())
+                val bitmap = generateQRCode(url)
                 withContext(Dispatchers.Main) {
                     binding.qrCode.setImageBitmap(bitmap)
                 }
