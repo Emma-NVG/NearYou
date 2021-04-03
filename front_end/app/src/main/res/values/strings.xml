@@ -22,6 +22,7 @@
     <string name="input_name">Nom</string>
     <string name="input_age">Âge</string>
     <string name="input_mail">Mail</string>
+    <string name="input_status">Statut</string>
     <string name="input_password">Mot de passe</string>
     <string name="input_password_c">Confirmation mot de passe</string>
     <string name="btn_connection">Connexion</string>
