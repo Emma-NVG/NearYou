@@ -22,7 +22,7 @@
             android:layout_marginBottom="16dp"
             android:src="@mipmap/ic_launcher"
             app:civ_border_width="2dp"
-            app:civ_border_color="#FF000000"
+            app:civ_border_color="?attr/colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@+id/profile_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
